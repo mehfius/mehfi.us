@@ -1,11 +1,13 @@
 
-let key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNucHl6eWRsdmN4c2JpdWt1ZmlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODIzMzk5MDYsImV4cCI6MTk5NzkxNTkwNn0.WZhQPFurWP-H0dnFQWW2ejxdnw0Bb1sPfVi8qtKcaPA"
-let url = "https://snpyzydlvcxsbiukufip.supabase.co/"
-let supabase = { "supabase": {"key":key, "url": url} }
+(function(){
 
+  const key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNucHl6eWRsdmN4c2JpdWt1ZmlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODIzMzk5MDYsImV4cCI6MTk5NzkxNTkwNn0.WZhQPFurWP-H0dnFQWW2ejxdnw0Bb1sPfVi8qtKcaPA"
+  const url = "https://snpyzydlvcxsbiukufip.supabase.co/"
+  const supabase = { "supabase": { "key":key, "url": url } }
+  
+  sessionStorage.setItem("supabase", JSON.stringify(supabase));
 
-
-sessionStorage.setItem("supabase", supabase);
+})();
 
 const load_start = async function(){
   
@@ -34,8 +36,8 @@ const load_scripts = function(json){
  
 /*   if(window.location.hostname=='mehfius.app'){ */
    
-    var url_js = sessionStorage.getItem("supabaseurl")+"storage/v1/object/public/js/all/"+json.js.production.uuid+".js";
-    var url_css = sessionStorage.getItem("supabaseurl")+"storage/v1/object/public/css/all/"+json.css.production.uuid+".css";
+  var url_js = sessionStorage.getItem("supabaseurl")+"storage/v1/object/public/js/all/"+json.js.production.uuid+".js";
+  var url_css = sessionStorage.getItem("supabaseurl")+"storage/v1/object/public/css/all/"+json.css.production.uuid+".css";
 
 /*   }else{
 
