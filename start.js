@@ -1,21 +1,21 @@
-localStorage.setItem("supabasekey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNucHl6eWRsdmN4c2JpdWt1ZmlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODIzMzk5MDYsImV4cCI6MTk5NzkxNTkwNn0.WZhQPFurWP-H0dnFQWW2ejxdnw0Bb1sPfVi8qtKcaPA");
+sessionStorage.setItem("supabasekey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNucHl6eWRsdmN4c2JpdWt1ZmlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODIzMzk5MDYsImV4cCI6MTk5NzkxNTkwNn0.WZhQPFurWP-H0dnFQWW2ejxdnw0Bb1sPfVi8qtKcaPA");
 
-localStorage.setItem("supabaseurl", "https://snpyzydlvcxsbiukufip.supabase.co/");
+sessionStorage.setItem("supabaseurl", "https://snpyzydlvcxsbiukufip.supabase.co/");
 
 const load_start = async function(){
   
-  var url = localStorage.getItem("supabaseurl") + "rest/v1/rpc/start";
+  var url = sessionStorage.getItem("supabaseurl") + "rest/v1/rpc/start";
   
   fetch(url, {
     
     method: 'POST',
-    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'apikey': localStorage.supabasekey },
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'apikey': sessionStorage.supabasekey },
   
   })  
   .then(response => response.json())
   .then(data => {
     load_scripts(data.scripts); 
-     set_session(data);
+     set_session(data.config);
   })
   .catch(error => {
     console.error('Error:', error);
@@ -29,8 +29,8 @@ const load_scripts = function(json){
  
 /*   if(window.location.hostname=='mehfius.app'){ */
    
-    var url_js = localStorage.getItem("supabaseurl")+"storage/v1/object/public/js/all/"+json.js.production.uuid+".js";
-    var url_css = localStorage.getItem("supabaseurl")+"storage/v1/object/public/css/all/"+json.css.production.uuid+".css";
+    var url_js = sessionStorage.getItem("supabaseurl")+"storage/v1/object/public/js/all/"+json.js.production.uuid+".js";
+    var url_css = sessionStorage.getItem("supabaseurl")+"storage/v1/object/public/css/all/"+json.css.production.uuid+".css";
 
 /*   }else{
 
