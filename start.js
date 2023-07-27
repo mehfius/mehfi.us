@@ -1,22 +1,20 @@
 
-(function(){
 
-  const key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNucHl6eWRsdmN4c2JpdWt1ZmlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODIzMzk5MDYsImV4cCI6MTk5NzkxNTkwNn0.WZhQPFurWP-H0dnFQWW2ejxdnw0Bb1sPfVi8qtKcaPA"
-  const url = "https://snpyzydlvcxsbiukufip.supabase.co/"
-  const supabase = { "supabase": { "key":key, "url": url } }
-  
-  sessionStorage.setItem("supabase", JSON.stringify(supabase));
+const key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNucHl6eWRsdmN4c2JpdWt1ZmlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODIzMzk5MDYsImV4cCI6MTk5NzkxNTkwNn0.WZhQPFurWP-H0dnFQWW2ejxdnw0Bb1sPfVi8qtKcaPA"
+const url = "https://snpyzydlvcxsbiukufip.supabase.co/"
+const supabase = { "key":key, "url": url }
 
-})();
+sessionStorage.setItem("supabase", JSON.stringify(supabase));
+
 
 const load_start = async function(){
-  
-  var url = sessionStorage.getItem("supabaseurl") + "rest/v1/rpc/start";
+
+  var url = supabase.url + "rest/v1/rpc/start";
   
   fetch(url, {
     
     method: 'POST',
-    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'apikey': sessionStorage.supabasekey },
+    headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'apikey': supabase.key },
   
   })  
   .then(response => response.json())
@@ -36,8 +34,8 @@ const load_scripts = function(json){
  
 /*   if(window.location.hostname=='mehfius.app'){ */
    
-  var url_js = sessionStorage.getItem("supabaseurl")+"storage/v1/object/public/js/all/"+json.js.production.uuid+".js";
-  var url_css = sessionStorage.getItem("supabaseurl")+"storage/v1/object/public/css/all/"+json.css.production.uuid+".css";
+  var url_js = supabase.url + "storage/v1/object/public/js/all/"+json.js.production.uuid+".js";
+  var url_css = supabase.url + "storage/v1/object/public/css/all/"+json.css.production.uuid+".css";
 
 /*   }else{
 
