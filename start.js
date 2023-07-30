@@ -93,7 +93,7 @@ const set_session = function(data){
   var text = [];
   var config = {};
 
-  for (var [key, value] of Object.entries(data.config)) {
+  for (var [key, value] of Object.entries(data)) {
 
     config[value.label] = value.value;
 
