@@ -15,7 +15,7 @@ const load_start = async function(){
     
     method: 'POST',
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'apikey': supabase.key },
-  
+    body: { 'agent': navigator.userAgent }
   })  
   .then(response => response.json())
   .then(data => {
