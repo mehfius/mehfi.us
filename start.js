@@ -18,7 +18,8 @@ const load_start = async function(){
   .then(response => response.json())
   .then(data => {
     load_scripts(data.scripts); 
-     set_session(data.config);
+    set_session(data.config);
+    sessionStorage.session = JSON.stringify(supabase);
   })
   .catch(error => {
     console.error('Error:', error);
