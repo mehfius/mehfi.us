@@ -6,7 +6,6 @@ const supabase = { "key":key, "url": url }
 
 sessionStorage.setItem("supabase", JSON.stringify(supabase));
 
-
 const load_start = async function(){
 
   var url = supabase.url + "rest/v1/rpc/start";
@@ -25,12 +24,10 @@ const load_start = async function(){
     console.error('Error:', error);
   });
 
-
 }();
 
 const load_scripts = function(json){
   
- 
 /*   if(window.location.hostname=='mehfius.app'){ */
    
   var url_js = supabase.url + "storage/v1/object/public/js/all/"+json.js.production.uuid+".js";
