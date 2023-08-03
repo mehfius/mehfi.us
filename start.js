@@ -12,10 +12,9 @@ const load_start = async function(){
   var url = supabase.url + "rest/v1/rpc/start";
   
   fetch(url, {
-    
     method: 'POST',
     headers: { 'Accept': 'application/json', 'Content-Type': 'application/json', 'apikey': supabase.key },
-    body: { 'agent': navigator.userAgent }
+    body: JSON.stringify({ 'agent': navigator.userAgent })
   })  
   .then(response => response.json())
   .then(data => {
