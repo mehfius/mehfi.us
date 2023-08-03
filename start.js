@@ -1,4 +1,3 @@
-sion
 
 const key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNucHl6eWRsdmN4c2JpdWt1ZmlwIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODIzMzk5MDYsImV4cCI6MTk5NzkxNTkwNn0.WZhQPFurWP-H0dnFQWW2ejxdnw0Bb1sPfVi8qtKcaPA"
 const url = "https://snpyzydlvcxsbiukufip.supabase.co/"
