@@ -48,19 +48,21 @@ const load_scripts = async function(json){
 
   document.head.appendChild(script);
 
+  Object.entries(json.css.third).forEach(([key, value]) => {
+    
+    let url_css = value.label;
+    
+    load_css(url_css);
+    
+  });
 
-  const promises = [
-    load_js(url_js),
-    load_css(url_css),
-    Object.entries(json.js.third).reduce((p, [key, value]) => {
-      return p.then(() => load_js(value.label));
-    }, Promise.resolve()),
-    Object.entries(json.css.third).reduce((p, [key, value]) => {
-      return p.then(() => load_css(value.label));
-    }, Promise.resolve())
-  ];
-
-  await Promise.all(promises);
+  Object.entries(json.js.third).forEach(([key, value]) => {
+ 
+    let url_js = value.label;
+    
+    load_js(url_js);
+    
+  });
 
 }
 
