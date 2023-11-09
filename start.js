@@ -26,7 +26,7 @@ const load_start = async function(){
 
 }();
 
-const load_scripts = function(json){
+const load_scripts = async function(json){
   
 /*   if(window.location.hostname=='mehfius.app'){ */
    
@@ -53,7 +53,7 @@ const load_scripts = function(json){
  
     let url_js = value.label;
     
-    load_js(url_js);
+    await load_js(url_js);
     
   });
 
@@ -61,13 +61,13 @@ const load_scripts = function(json){
     
     let url_css = value.label;
     
-    load_css(url_css);
+    await load_css(url_css);
     
   });
 
 }
 
-const load_css = function(url){
+const load_css = async function(url){
   
   let link = document.createElement('link');
   link.rel = 'stylesheet';
@@ -76,7 +76,7 @@ const load_css = function(url){
   
 }
 
-const load_js = function(url){
+const load_js = async function(url){
   
   script = document.createElement("script");
   script.src = url;
