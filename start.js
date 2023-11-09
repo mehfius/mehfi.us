@@ -40,7 +40,7 @@ const load_scripts = async function(json){
     
   } */
 
-  load_css(url_css);
+  await load_css(url_css);
   
   script = document.createElement("script");
   script.setAttribute("onload","load()");
