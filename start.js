@@ -50,8 +50,6 @@ const load_scripts = async function(json){
 }, 5000);
 
 
-  document.head.appendChild(script);
-
   Object.entries(json.css.third).forEach(([key, value]) => {
     
     let url_css = value.label;
