@@ -42,9 +42,12 @@ const load_scripts = async function(json){
 
   await load_css(url_css);
   
-  script = document.createElement("script");
-  script.setAttribute("onload","load()");
-  script.src = url_js;
+  setTimeout(() => {
+    script = document.createElement("script");
+    script.setAttribute("onload","load()");
+    script.src = url_js;
+}, 5000);
+
 
   document.head.appendChild(script);
 
