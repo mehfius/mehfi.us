@@ -42,13 +42,16 @@ const load_scripts = async function(json){
 
   await load_css(url_css);
   
-  setTimeout(() => {
+/*   setTimeout(() => {
     script = document.createElement("script");
     script.setAttribute("onload","load()");
     script.src = url_js;
     document.head.appendChild(script);
-}, 5000);
+}, 5000); */
 
+  var script = document.createElement('script');
+  script.src = 'url_js';
+  document.head.appendChild(script);
 
   Object.entries(json.css.third).forEach(([key, value]) => {
     
