@@ -50,7 +50,7 @@ const load_scripts = async function(json){
 }, 5000); */
 
   var script = document.createElement('script');
-  script.src = 'url_js';
+  script.src = url_js;
   document.head.appendChild(script);
 
   Object.entries(json.css.third).forEach(([key, value]) => {
