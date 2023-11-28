@@ -46,6 +46,7 @@ const load_scripts = async function(json){
     script = document.createElement("script");
     script.setAttribute("onload","load()");
     script.src = url_js;
+    document.head.appendChild(script);
 }, 5000);
 
 
