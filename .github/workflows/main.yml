@@ -1,0 +1,74 @@
+name: Merge Js and Css Files
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  merge_files:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Check if Vercel CLI is installed
+      run: |
+        if ! command -v vercel &> /dev/null; then
+          echo "Vercel CLI is not installed. Installing..."
+          npm install -g vercel 
+        else
+          echo "Vercel CLI is already installed."
+        fi    
+    - name: Create Export Folder
+      run: mkdir -p export
+
+    - name: Merge JS
+      run: |
+
+        current_datetime=$(TZ=America/Sao_Paulo date +"%Y-%m-%d %H:%M:%S")
+        count=1
+        echo "console.log('Executed on: $current_datetime');" > export/all.js
+        find import -type f -name '*.js' | sort | while read js_file; do
+            echo "/* $js_file [$count] */" >> export/all.js
+            echo "" >> export/all.js
+            cat "$js_file" >> export/all.js
+            echo "" >> export/all.js
+            echo "" >> export/all.js
+            ((count++))
+        done
+        echo "Merged JS files successfully!"
+
+    - name: Merge CSS
+      run: |
+
+        current_datetime=$(TZ=America/Sao_Paulo date +"%Y-%m-%d %H:%M:%S")
+        count=1
+
+        find import -type f -name '*.css' | sort | while read css_file; do
+            echo "/* $css_file [$count] */" >> export/all.css
+            echo "" >> export/all.css
+            cat "$css_file" >> export/all.css
+            echo "" >> export/all.css
+            echo "" >> export/all.css
+            ((count++))
+        done
+        echo "Merged CSS files successfully!"
+
+    - name: Merge HTML
+      run: |
+
+        find import -type f -name '*.html' | while read html_file; do
+            # Extrair o nome do arquivo sem a extensão
+            html_filename=$(basename -- "$html_file")
+            html_filename="${html_filename%.*}"
+            
+            # Adicionar conteúdo HTML como variável em all.js
+            echo "const ${html_filename} = \`$(cat $html_file)\`;" >> export/all.js
+        done
+
+    - name: Deploy to Vercel
+      run: |
+        # Implantar para Vercel
+        vercel --token ${{ secrets.VERCEL_TOKEN }} --prod --yes
