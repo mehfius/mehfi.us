@@ -1,27 +1,44 @@
+(async function (){
 
-    fetch('/html/login.html')
-    .then(response => {
-      // Verifica se a requisição foi bem-sucedida
-      if (!response.ok) {
-        throw new Error('Falha ao carregar o arquivo HTML');
-      }
-      // Retorna o conteúdo do arquivo HTML como texto
-      return response.text();
-    })
-    .then(html => {
-      // 2. Transforma o conteúdo HTML em um objeto
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-  
-      // 3. Armazena o objeto resultante em uma variável
-      const objetoHTML = doc;
-  
-      // Agora você pode manipular o objeto HTML conforme necessário
+    var fields = document.querySelectorAll("fields input");
+    var isEmpty = false;
 
-      document.body.append(objetoHTML.body.childNodes[0])
- 
-    })
-    .catch(error => {
-      console.error('Erro:', error);
-    });
+    for (var i = 0; i < fields.length; i++) {
+        if (fields[i].value === "") {
+            isEmpty = true;
+            break;
+        }
+    }
 
+    if (isEmpty) {
+
+        alert("Por favor, preencha todos os campos.");
+
+    } else {
+
+        var formData = {};
+        formData.name = 'login';
+        fields.forEach(function(field) {
+            var fieldName = field.parentElement.tagName.toLowerCase();
+            formData[fieldName] = field.value;
+        });
+
+        //var jsonData = JSON.stringify(formData);
+
+        const res = await supabase_fetch(formData);
+
+        if(res.status == 1){
+
+            sessionStorage.setItem("token", JSON.stringify(res.token));
+            load_css('/css/content.css')
+            load_js('/js/contents/content.js');
+          
+        }else{
+
+            alert('email ou senha invalido');
+
+        }
+
+    }
+
+})()
