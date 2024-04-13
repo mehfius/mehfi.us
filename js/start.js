@@ -11,5 +11,3 @@ const load_js = async function(url){
     document.head.appendChild(script);
   
 }
-
-
