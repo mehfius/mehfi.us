@@ -6,10 +6,10 @@
     parent.removeChild(child);
     
     load('/css/header.css')
-    load('/js/page/header.js');
+    rota_header();
 
     load('/css/content.css')
-    load('/js/contents/content.js');
+    rota_contents();
 
 
 

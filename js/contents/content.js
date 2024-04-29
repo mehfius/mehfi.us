@@ -36,7 +36,7 @@
         button_editar.onclick = function (){
 
             sessionStorage.setItem('contents_id',dataItem['id'])
-            load('/js/form.js')
+            rota_form()
 
         }
 

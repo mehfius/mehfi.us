@@ -23,12 +23,14 @@
     json.id = JSON.parse(sessionStorage.getItem('contents_id'))
 
     try {
+
         const data = await supabase_fetch(json);
-        // Faça algo com os dados, se necessário
-        load('/js/contents/content.js')
+        rota_contents();
+
     } catch (error) {
+        
         console.error('Ocorreu um erro durante a chamada supabase_fetch:', error);
-        // Lidar com o erro de alguma forma, por exemplo, exibindo uma mensagem para o usuário
+
     }
 
 })()

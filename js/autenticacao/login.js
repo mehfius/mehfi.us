@@ -31,7 +31,7 @@
 
             sessionStorage.setItem("token", JSON.stringify(res.token));
 
-            load('/js/contents/content.js');
+            rota_contents();
           
         }else{
 

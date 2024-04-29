@@ -109,5 +109,11 @@ const supabase_fetch = function (data) {
 
 }
 
-function refresh_contents() { load('js/contents/content.js'); }
-function refresh_formlogin() { load('js/autenticacao/form_login.js') }
+function rota_contents() { load('/js/contents/content.js'); }
+function rota_formlogin() { load('/js/autenticacao/form_login.js') }
+function rota_form() { load('/js/form.js') }
+
+function rota_salvar() { load('/js/form_salvar.js') }
+function rota_header() { load('/js/page/header.js') }
+
+function rota_login() { load('/js/autenticacao/login.js') }

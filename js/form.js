@@ -36,11 +36,11 @@
             footer.append(button_salvar, button_cancelar);
     
             button_salvar.onclick = function (){
-                load('/js/form_salvar.js');
+                rota_salvar();
             }
 
             button_cancelar.onclick = function (){
-                load('/js/contents/content.js');
+                rota_contents();
             }
 
         window.append(header, form, footer);
