@@ -108,3 +108,6 @@ const supabase_fetch = function (data) {
     .catch((error) => console.error(error));        
 
 }
+
+function refresh_contents() { load('js/contents/content.js'); }
+function refresh_formlogin() { load('js/autenticacao/form_login.js') }
