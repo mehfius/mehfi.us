@@ -1,0 +1,46 @@
+window form label {
+    width: 100%;
+    float: left;
+    color: #fff;
+    margin-bottom: 10px;
+}
+
+window form textarea {
+    float: left;
+    width: 100%;
+    height: 120px;
+    border-radius: 20px;
+    border: 0;
+    background-color: #3c3939;
+    padding: 20px;
+    color: #b8b8b8;
+}
+
+window form input {
+    width: 100%;
+    float: left;
+    color: #fff;
+}
+
+window form description {
+    width: 100%;
+    float: left;
+}
+
+window footer{
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 10px 0px;
+}
+
+window footer button{
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    color:#fff;
+    background-color:#534d46;
+    float: right;
+    margin-left: 10px;    
+    border: 0;
+}

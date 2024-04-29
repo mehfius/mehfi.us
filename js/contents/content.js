@@ -9,6 +9,8 @@
         json.name = 'content_list'
         json.token = JSON.parse(sessionStorage.getItem('token'))
 
+        sessionStorage.removeItem('contents_id')
+
     const data = await supabase_fetch(json);
 
     load_html('/html/header.html',document.querySelector("body > header"));
@@ -16,12 +18,15 @@
     document.querySelector('body > content').innerHTML = '';
 
     for (const dataItem of data) {
+
         const item = createCustomElement('item');
         const container = createCustomElement('container');
     
         for (const [key, value] of Object.entries(dataItem)) {
+
             const element = createCustomElement(key, value);
             container.appendChild(element);
+            
         }
     
         const menu = createCustomElement('menu');
@@ -29,7 +34,10 @@
         const button_editar = createCustomElement('button', 'Editar');
 
         button_editar.onclick = function (){
+
+            sessionStorage.setItem('contents_id',dataItem['id'])
             load('/js/form.js')
+
         }
 
         menu.appendChild(button1);
@@ -39,6 +47,7 @@
         item.appendChild(menu);
         
         document.querySelector('content').append(item);
+
     }
     
     function createCustomElement(name, value) {
