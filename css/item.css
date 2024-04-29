@@ -1,0 +1,62 @@
+body > content > item {
+    float: left;
+    width: 100%;
+    margin-bottom: 20px;    
+}
+
+body > content > item > container {
+    background-color: #534d46;
+    padding: 20px;
+    border-radius: 10px;
+    color: #fff;
+    float: left;
+    width: calc(100% - 40px);
+}
+
+body > content > item > container > id{
+    
+    float: left;
+    width: 100%;
+
+}
+
+body > content > item > container > users{
+
+    float: left;
+    width: 100%;
+
+}
+
+body > content > item > container > created_at{
+
+    float: left;
+    width: 100%;
+
+}
+
+body > content > item > container > description{
+
+    float: left;
+    width: 100%;
+
+}
+
+body > content > item > menu {
+
+    float: left;
+    width: 100%;
+    margin: 0;
+    padding: 10px 0;
+
+}
+
+body > content > item > menu > button {
+    padding: 8px 16px;
+    border-radius: 10px;
+    cursor: pointer;
+    color:#fff;
+    background-color:#534d46;
+    float: right;
+    margin-left: 10px;    
+    border: 0;
+}

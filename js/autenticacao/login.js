@@ -30,8 +30,8 @@
         if(res.status == 1){
 
             sessionStorage.setItem("token", JSON.stringify(res.token));
-            load_css('/css/content.css')
-            load_js('/js/contents/content.js');
+
+            load('/js/contents/content.js');
           
         }else{
 

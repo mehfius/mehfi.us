@@ -4,24 +4,55 @@ const supabase = { "key":key, "url": url }
 
 sessionStorage.setItem("supabase", JSON.stringify(supabase));
 
-const load_js = async function(url){
-  
-    script = document.createElement("script");
-    script.src = url;
-    document.head.appendChild(script);
-  
-}
+const load = async function(url){
 
-const load_css = function(url){
-    
-    let link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = url;
-    document.head.appendChild(link);
-    
-}
+  const ext = url.split('.').pop();
 
-const load_function = async function(url){
+  switch (ext.toLowerCase()) {
+
+    case 'js':
+
+      let previousScripts = document.querySelectorAll('script[src="' + url + '"]');
+
+      let newScript = document.createElement("script");
+      newScript.src = url;
+      newScript.onload = function() {
+        previousScripts.forEach(script => {
+            script.remove();
+        });
+      };
+
+      document.head.appendChild(newScript);
+
+      console.log(`[${url}] Javascript loaded`);
+      break;
+
+    case 'css':
+
+      let previousLinks = document.querySelectorAll('link[rel="stylesheet"][href="' + url + '"]');
+
+      let newLink = document.createElement('link');
+      newLink.rel = 'stylesheet';
+      newLink.href = url;
+      newLink.onload = function() {
+          previousLinks.forEach(link => {
+              link.remove();
+          });
+      };
+
+      document.head.appendChild(newLink);   
+
+      console.log(`[${url}] CSS loaded`);
+      break;
+
+    case 'html':
+
+      console.log(`[${url}] HTML loaded`);
+      break;
+
+    default:
+      return 'Tipo de arquivo desconhecido';
+  }
 
 }
 

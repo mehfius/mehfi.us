@@ -1,32 +1,53 @@
 (async function (){
 
-
-    var parent = document.querySelector('body')
-    var child = document.querySelector('body > login')
+    load('/css/header.css')
+    load('/css/content.css')
+    load('/css/item.css')
     
-    parent.removeChild(child);
-
     var json = {};
 
         json.name = 'content_list'
         json.token = JSON.parse(sessionStorage.getItem('token'))
 
-    const res = await supabase_fetch(json);
+    const data = await supabase_fetch(json);
 
-/*     var content = document.createElement("div");
+    load_html('/html/header.html',document.querySelector("body > header"));
 
-    content.textContent = "Olá, mundo! Este é um novo elemento criado com JavaScript.";
+    document.querySelector('body > content').innerHTML = '';
 
-        document.body.appendChild(novoElemento);
+    for (const dataItem of data) {
+        const item = createCustomElement('item');
+        const container = createCustomElement('container');
+    
+        for (const [key, value] of Object.entries(dataItem)) {
+            const element = createCustomElement(key, value);
+            container.appendChild(element);
+        }
+    
+        const menu = createCustomElement('menu');
+        const button1 = createCustomElement('button', 'Button 1');
+        const button_editar = createCustomElement('button', 'Editar');
 
-    res.forEach(function(res) {
+        button_editar.onclick = function (){
+            load('/js/form.js')
+        }
 
-        var paragraph = document.createElement("label");
+        menu.appendChild(button1);
+        menu.appendChild(button_editar);
+    
+        item.appendChild(container);
+        item.appendChild(menu);
         
-        paragraph.textContent = JSON.stringify(pessoa);
-        
-        outputElement.appendChild(paragraph);
+        document.querySelector('content').append(item);
+    }
+    
+    function createCustomElement(name, value) {
 
-    });     */
+        const element = document.createElement(name.toLowerCase()); 
+        element.textContent = value;
+
+        return element;
+
+    }
 
 })()
