@@ -6,6 +6,8 @@ sessionStorage.setItem("supabase", JSON.stringify(supabase));
 
 const load = async function(url){
 
+  document.querySelector('loading').setAttribute('show','1')
+
   const ext = url.split('.').pop();
 
   switch (ext.toLowerCase()) {
@@ -20,6 +22,7 @@ const load = async function(url){
         previousScripts.forEach(script => {
             script.remove();
         });
+        document.querySelector('loading').removeAttribute('show')
       };
 
       document.head.appendChild(newScript);
@@ -38,6 +41,8 @@ const load = async function(url){
           previousLinks.forEach(link => {
               link.remove();
           });
+          document.querySelector('loading').removeAttribute('show')
+
       };
 
       document.head.appendChild(newLink);   
