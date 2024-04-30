@@ -31,6 +31,9 @@ body > content > item > container > created_at{
 
     float: left;
     width: 100%;
+    text-align: right;
+    font-size: 10pt;
+    color: #000;
 
 }
 
@@ -38,9 +41,19 @@ body > content > item > container > description{
 
     float: left;
     width: 100%;
+    line-height: 1.5;
 
 }
+body > content > item > container > id{
 
+    display: none;
+
+}
+body > content > item > container > users{
+
+    display: none;    
+
+}
 body > content > item > menu {
 
     float: left;

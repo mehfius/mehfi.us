@@ -27,7 +27,9 @@
             description.append(description_label,description_textarea);
     
         let form = createCustomElement('form');
-    
+        
+            form.append(formTipo());
+
             form.append(description);
     
         let button_salvar = createCustomElement('button','Salvar');
@@ -57,6 +59,45 @@
         element.textContent = value;
 
         return element;
+
+    }
+
+    function formTipo() {
+
+        let tipo = createCustomElement('tipo');
+        let label = createCustomElement('label','Tipo');
+
+        json = [
+            {'description':'Sem Tipo','value':'0'},
+            {'description':'Arquivo','value':'1'},
+            {'description':'Configuração','value':'2'},
+            {'description':'Autenticacao','value':'3'}
+        ]
+
+        for (const fields of json) {
+
+            const element = createCustomElement('button', fields.description);
+
+            element.onclick = function (){
+
+                alert(fields.value)
+
+            }
+
+            tipo.append(element)
+            
+        }
+
+/* 
+        let tipo_padrao       = createCustomElement('button', 'Sem tipo');
+        let tipo_arquivo      = createCustomElement('button', 'Arquivo');
+        let tipo_configuracao = createCustomElement('button', 'Configuração');
+        let tipo_autenticacao = createCustomElement('button', 'Autenticacao');
+
+            tipo.append(label, tipo_padrao, tipo_arquivo, tipo_configuracao, tipo_autenticacao);
+ */
+
+        return tipo;
 
     }
 

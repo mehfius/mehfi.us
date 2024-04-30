@@ -24,8 +24,21 @@
     
         for (const [key, value] of Object.entries(dataItem)) {
 
-            const element = createCustomElement(key, value);
-            container.appendChild(element);
+/*             const element = createCustomElement(key, value);
+            container.appendChild(element); */
+      
+                if(key=='created_at'){
+
+                    moment.locale('pt-br');
+                    const element = createCustomElement(key, moment(value, 'YYYYMMDD').utc(true).fromNow());
+                    container.appendChild(element);
+                
+                } else {
+
+                    const element = createCustomElement(key, value);
+                    container.appendChild(element);
+
+                }      
             
         }
     
