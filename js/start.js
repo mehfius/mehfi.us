@@ -118,6 +118,8 @@ function rota_contents() { load('/js/contents/content.js'); }
 function rota_formlogin() { load('/js/autenticacao/form_login.js') }
 function rota_form() { load('/js/form.js') }
 
+function rota_contents_delete() { load('/js/contents/content_delete.js'); }
+
 function rota_salvar() { load('/js/form_salvar.js') }
 function rota_header() { load('/js/page/header.js') }
 

@@ -23,27 +23,25 @@
         const container = createCustomElement('container');
     
         for (const [key, value] of Object.entries(dataItem)) {
+    
+            if(key=='created_at'){
 
-/*             const element = createCustomElement(key, value);
-            container.appendChild(element); */
-      
-                if(key=='created_at'){
+                moment.locale('pt-br');
+                const element = createCustomElement(key, moment(value, 'YYYYMMDD').utc(true).fromNow());
+                container.appendChild(element);
+            
+            } else {
 
-                    moment.locale('pt-br');
-                    const element = createCustomElement(key, moment(value, 'YYYYMMDD').utc(true).fromNow());
-                    container.appendChild(element);
-                
-                } else {
+                const element = createCustomElement(key, value);
+                container.appendChild(element);
 
-                    const element = createCustomElement(key, value);
-                    container.appendChild(element);
-
-                }      
+            }      
             
         }
     
         const menu = createCustomElement('menu');
-        const button1 = createCustomElement('button', 'Button 1');
+
+        const button_deletar = createCustomElement('button', 'Deletar');
         const button_editar = createCustomElement('button', 'Editar');
 
         button_editar.onclick = function (){
@@ -53,7 +51,17 @@
 
         }
 
-        menu.appendChild(button1);
+        button_deletar.onclick = function (){
+            
+            if(confirm('Deseja remover este item?')){
+                sessionStorage.setItem('contents_id',dataItem['id'])
+                rota_contents_delete()
+            }
+
+
+        }        
+
+        menu.appendChild(button_deletar);
         menu.appendChild(button_editar);
     
         item.appendChild(container);

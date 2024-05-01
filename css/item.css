@@ -6,11 +6,11 @@ body > content > item {
 
 body > content > item > container {
     background-color: #534d46;
-    padding: 20px;
-    border-radius: 10px;
+    border-radius: 5px;
     color: #fff;
     float: left;
-    width: calc(100% - 40px);
+    width: 100%;
+    box-shadow: 0px 0px 10px 0px #000;    
 }
 
 body > content > item > container > id{
@@ -27,21 +27,32 @@ body > content > item > container > users{
 
 }
 
-body > content > item > container > created_at{
+body > content > item > container > tipo{
 
     float: left;
-    width: 100%;
-    text-align: right;
     font-size: 10pt;
     color: #000;
+    padding: 20px;
 
 }
 
-body > content > item > container > description{
+body > content > item > container > created_at{
 
+    float: right;
+    font-size: 10pt;
+    color: #000;
+    text-align: right;
+    padding: 20px;
+}
+
+body > content > item > container > description{
+    
     float: left;
-    width: 100%;
     line-height: 1.5;
+    border-top: 1px solid #828282;
+    padding: 20px;
+    width: calc(100% - 40px);
+    font-size: 10pt;
 
 }
 body > content > item > container > id{
@@ -65,11 +76,12 @@ body > content > item > menu {
 
 body > content > item > menu > button {
     padding: 8px 16px;
-    border-radius: 10px;
+    border-radius: 5px;
     cursor: pointer;
     color:#fff;
     background-color:#534d46;
     float: right;
     margin-left: 10px;    
     border: 0;
+    letter-spacing: 0.5px;
 }

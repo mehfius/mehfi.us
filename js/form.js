@@ -28,7 +28,7 @@
     
         let form = createCustomElement('form');
         
-            form.append(formTipo());
+            form.append(formTipo(data[0].tipo));
 
             form.append(description);
     
@@ -62,41 +62,48 @@
 
     }
 
-    function formTipo() {
+    function formTipo(value) {
 
         let tipo = createCustomElement('tipo');
         let label = createCustomElement('label','Tipo');
+        let input = createCustomElement('input','0')
+
+        input.setAttribute('type','hidden');
 
         json = [
-            {'description':'Sem Tipo','value':'0'},
-            {'description':'Arquivo','value':'1'},
-            {'description':'Configuração','value':'2'},
-            {'description':'Autenticacao','value':'3'}
+            {'description':'Sem Tipo', 'value':'0'},
+            {'description':'Arquivo', 'value':'1'},
+            {'description':'Configuração', 'value':'2'},
+            {'description':'Autenticação', 'value':'3'}
         ]
+
+        tipo.append(label)
 
         for (const fields of json) {
 
             const element = createCustomElement('button', fields.description);
 
+            if(value == fields.value){
+                element.setAttribute('selected','1');
+            }
+            
             element.onclick = function (){
 
-                alert(fields.value)
+                document.querySelectorAll('button').forEach(button => button.removeAttribute('selected'));
+
+                this.setAttribute('selected','1');
+
+                document.querySelector('window tipo > input').value = fields.value;
 
             }
+
+            element.setAttribute('type','button')
 
             tipo.append(element)
             
         }
-
-/* 
-        let tipo_padrao       = createCustomElement('button', 'Sem tipo');
-        let tipo_arquivo      = createCustomElement('button', 'Arquivo');
-        let tipo_configuracao = createCustomElement('button', 'Configuração');
-        let tipo_autenticacao = createCustomElement('button', 'Autenticacao');
-
-            tipo.append(label, tipo_padrao, tipo_arquivo, tipo_configuracao, tipo_autenticacao);
- */
-
+        
+        tipo.append(input)
         return tipo;
 
     }

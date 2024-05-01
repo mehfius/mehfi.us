@@ -1,5 +1,5 @@
 login {
-    width:200px;
+    width:400px;
     position: absolute;
     top: 50%;
     left: 50%;
@@ -9,11 +9,13 @@ login {
 login email {
     padding: 10px;
     float: left;
+    width: calc(100% - 20px);
 }
 
 login password {
     padding: 10px;
     float: left;
+    width: calc(100% - 20px);
 }
 
 login fields label {
@@ -25,6 +27,25 @@ login fields label {
 
 login fields input{
     float: left;
+    background-color: var(--input-background);
+    font-size: 120%;
+    border-radius: 5px;
+    text-indent: 15px;
+    border: 0;
+    float: left;
+    height: 40px;
+    padding: 0;
+    outline: none;
+    margin-bottom: 10px;
+    width: 100%;    
+}
+
+login fields input:-internal-autofill-selected{
+    background-color: var(--input-background);
+}
+
+login fields input:-webkit-autofill{
+    background-color: var(--input-background);
 }
 
 login buttons{
