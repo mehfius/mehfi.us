@@ -8,24 +8,43 @@ const load = async function(url){
   return new Promise((resolve, reject) => {
 
     const ext = url.split('.').pop().toLowerCase();
-    
+
+    document.querySelector('loading').setAttribute('show','1')
+
     switch (ext) {
       case 'js':
-        // Lógica para carregar arquivo JavaScript
+
+        let previousScripts = document.querySelectorAll('script[src="' + url + '"]');
+
         const script = document.createElement('script');
         script.src = url;
-        script.onload = resolve; // Resolve a Promise quando o script é carregado com sucesso
-        script.onerror = () => reject(`Erro ao carregar ${url}`); // Rejeita a Promise em caso de erro
+        script.onload =  () => {
+          setTimeout(() => {
+            previousScripts.forEach(s => { s.remove(); });
+            resolve();
+          }, 100); 
+        };
+        script.onerror = () => reject(`Erro ao carregar ${url}`); 
         document.head.appendChild(script);
+
         break;
       case 'css':
-        // Lógica para carregar arquivo CSS
+        
+        let previousLinks = document.querySelectorAll('link[rel="stylesheet"][href="' + url + '"]');
+
         const link = document.createElement('link');
         link.rel = 'stylesheet';
         link.href = url;
-        link.onload = resolve; // Resolve a Promise quando o CSS é carregado com sucesso
-        link.onerror = () => reject(`Erro ao carregar ${url}`); // Rejeita a Promise em caso de erro
+        link.onload = () => {
+          setTimeout(() => {
+            previousLinks.forEach(s => { s.remove(); });
+            resolve();
+          }, 100);
+        };
+        link.onerror = () => reject(`Erro ao carregar ${url}`); 
         document.head.appendChild(link);
+
+
         break;
       default:
         reject(`Tipo de arquivo desconhecido: ${ext}`);

@@ -103,5 +103,5 @@
         return tipo;
 
     }
-
+    document.querySelector('loading').removeAttribute('show')
 })()

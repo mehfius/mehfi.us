@@ -84,5 +84,5 @@
         return element;
 
     }
-
+    document.querySelector('loading').removeAttribute('show')
 })()
