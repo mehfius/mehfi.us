@@ -22,7 +22,7 @@ const load = async function(url){
           setTimeout(() => {
             previousScripts.forEach(s => { s.remove(); });
             resolve();
-          }, 100); 
+          }, 0); 
         };
         script.onerror = () => reject(`Erro ao carregar ${url}`); 
         document.head.appendChild(script);
@@ -39,7 +39,7 @@ const load = async function(url){
           setTimeout(() => {
             previousLinks.forEach(s => { s.remove(); });
             resolve();
-          }, 100);
+          }, 0);
         };
         link.onerror = () => reject(`Erro ao carregar ${url}`); 
         document.head.appendChild(link);
