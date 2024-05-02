@@ -1,4 +1,8 @@
 (async function (){
+  
+  if(sessionStorage.getItem('token')){
+      return rota_contents();
+  }
 
   load('/css/loading.css')
   load('/css/form_login.css')
