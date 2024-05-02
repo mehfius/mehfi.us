@@ -11,6 +11,4 @@
     load('/css/content.css')
     rota_contents();
 
-
-
 });

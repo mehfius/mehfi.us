@@ -21,7 +21,9 @@
 
         const item = createCustomElement('item');
         const container = createCustomElement('container');
-    
+
+
+
         for (const [key, value] of Object.entries(dataItem)) {
     
             if(key=='created_at'){
@@ -29,7 +31,13 @@
                 moment.locale('pt-br');
                 const element = createCustomElement(key, moment(value, 'YYYYMMDD').utc(true).fromNow());
                 container.appendChild(element);
-            
+
+            } else if (key=='tipo_icon') {
+
+                const element = createCustomElement('icon');
+                element.setAttribute('class',`fa-solid ${value}`)
+                container.appendChild(element);
+                
             } else {
 
                 const element = createCustomElement(key, value);
@@ -57,7 +65,6 @@
                 sessionStorage.setItem('contents_id',dataItem['id'])
                 rota_contents_delete()
             }
-
 
         }        
 

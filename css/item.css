@@ -29,11 +29,16 @@ body > content > item > container > users{
 
 body > content > item > container > tipo{
 
-    float: left;
+
+    display: none;
+
+}
+
+body > content > item > container > tipo_label{
+    float:left;
     font-size: 10pt;
     color: #000;
     padding: 20px;
-
 }
 
 body > content > item > container > created_at{
@@ -43,6 +48,11 @@ body > content > item > container > created_at{
     color: #000;
     text-align: right;
     padding: 20px;
+}
+
+body > content > item > container > icon{
+    float: left;
+    padding: 20px 0 20px 20px;
 }
 
 body > content > item > container > description{
