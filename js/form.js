@@ -1,6 +1,6 @@
 (async function (){
 
-    load('/css/form.css')
+    await load('/css/form.css')
 
     try {
 
@@ -28,7 +28,7 @@
     
         let form = createCustomElement('form');
         
-            form.append(formTipo(data[0].tipo));
+            form.append(formTipo(data[0].tipo,data[0].tipos));
 
             form.append(description);
     
@@ -62,7 +62,7 @@
 
     }
 
-    function formTipo(value) {
+    function formTipo(value,data) {
 
         let tipo = createCustomElement('tipo');
         let label = createCustomElement('label','Tipo');
@@ -70,20 +70,15 @@
 
         input.setAttribute('type','hidden');
 
-        json = [
-            {'description':'Sem Tipo', 'value':'0'},
-            {'description':'Arquivo', 'value':'1'},
-            {'description':'Configuração', 'value':'2'},
-            {'description':'Autenticação', 'value':'3'}
-        ]
-
         tipo.append(label)
 
-        for (const fields of json) {
+        for (const fields of data) {
 
-            const element = createCustomElement('button', fields.description);
+            const element = createCustomElement('button');
 
-            if(value == fields.value){
+            element.setAttribute('class',`fa-solid ${fields.icon}`)
+
+            if(value == fields.id){
                 element.setAttribute('selected','1');
             }
             
@@ -93,7 +88,7 @@
 
                 this.setAttribute('selected','1');
 
-                document.querySelector('window tipo > input').value = fields.value;
+                document.querySelector('window tipo > input').value = fields.id;
 
             }
 

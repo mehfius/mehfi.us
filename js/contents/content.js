@@ -1,8 +1,8 @@
 (async function (){
 
-    load('/css/header.css')
-    load('/css/content.css')
-    load('/css/item.css')
+    await load('/css/header.css')
+    await load('/css/content.css')
+    await load('/css/item.css')
     
     var json = {};
 

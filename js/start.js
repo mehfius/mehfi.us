@@ -5,62 +5,33 @@ const supabase = { "key":key, "url": url }
 sessionStorage.setItem("supabase", JSON.stringify(supabase));
 
 const load = async function(url){
+  return new Promise((resolve, reject) => {
 
-  document.querySelector('loading').setAttribute('show','1')
-
-  const ext = url.split('.').pop();
-
-  switch (ext.toLowerCase()) {
-
-    case 'js':
-
-      let previousScripts = document.querySelectorAll('script[src="' + url + '"]');
-
-      let newScript = document.createElement("script");
-      newScript.src = url;
-      newScript.onload = function() {
-        previousScripts.forEach(script => {
-            script.remove();
-        });
-        document.querySelector('loading').removeAttribute('show')
-      };
-
-      document.head.appendChild(newScript);
-
-      console.log(`[${url}] Javascript loaded`);
-      break;
-
-    case 'css':
-
-      let previousLinks = document.querySelectorAll('link[rel="stylesheet"][href="' + url + '"]');
-
-      let newLink = document.createElement('link');
-      newLink.rel = 'stylesheet';
-      newLink.href = url;
-      newLink.onload = function() {
-          previousLinks.forEach(link => {
-              link.remove();
-          });
-          document.querySelector('loading').removeAttribute('show')
-
-      };
-
-      document.head.appendChild(newLink);   
-
-      console.log(`[${url}] CSS loaded`);
-      break;
-
-    case 'html':
-
-      console.log(`[${url}] HTML loaded`);
-      break;
-
-    default:
-      return 'Tipo de arquivo desconhecido';
-  }
-
+    const ext = url.split('.').pop().toLowerCase();
+    
+    switch (ext) {
+      case 'js':
+        // Lógica para carregar arquivo JavaScript
+        const script = document.createElement('script');
+        script.src = url;
+        script.onload = resolve; // Resolve a Promise quando o script é carregado com sucesso
+        script.onerror = () => reject(`Erro ao carregar ${url}`); // Rejeita a Promise em caso de erro
+        document.head.appendChild(script);
+        break;
+      case 'css':
+        // Lógica para carregar arquivo CSS
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = url;
+        link.onload = resolve; // Resolve a Promise quando o CSS é carregado com sucesso
+        link.onerror = () => reject(`Erro ao carregar ${url}`); // Rejeita a Promise em caso de erro
+        document.head.appendChild(link);
+        break;
+      default:
+        reject(`Tipo de arquivo desconhecido: ${ext}`);
+    }
+  });
 }
-
 const load_html = async function(url,e){
 
     fetch(url)
