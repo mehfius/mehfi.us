@@ -29,13 +29,12 @@ body > content > item > container > users{
 
 body > content > item > container > tipo{
 
-
     display: none;
 
 }
 
 body > content > item > container > tipo_label{
-    
+
     float:left;
     font-size: 10pt;
     padding: 20px;
@@ -52,8 +51,10 @@ body > content > item > container > created_at{
 }
 
 body > content > item > container > icon{
+
     float: left;
     padding: 20px 0 20px 20px;
+
 }
 
 body > content > item > container > description{
@@ -65,17 +66,21 @@ body > content > item > container > description{
     width: calc(100% - 40px);
     font-size: 10pt;
     white-space: pre-wrap;
+
 }
+
 body > content > item > container > id{
 
     display: none;
 
 }
+
 body > content > item > container > users{
 
     display: none;    
 
 }
+
 body > content > item > menu {
 
     float: left;
@@ -86,6 +91,7 @@ body > content > item > menu {
 }
 
 body > content > item > menu > button {
+    
     padding: 8px 16px;
     border-radius: 5px;
     cursor: pointer;
@@ -96,4 +102,5 @@ body > content > item > menu > button {
     border: 0;
     letter-spacing: 0.5px;
     box-shadow: 0px 0px 2px 0px #000;
+
 }
