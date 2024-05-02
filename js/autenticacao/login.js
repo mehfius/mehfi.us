@@ -41,4 +41,6 @@
 
     }
 
+    document.querySelector('loading').removeAttribute('show')
+
 })()
