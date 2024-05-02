@@ -35,6 +35,41 @@
                 const element = createCustomElement('icon');
                 element.setAttribute('class',`fa-solid ${value}`)
                 container.appendChild(element);
+
+            } else if (key=='description') { 
+
+                if(dataItem['tipo']==3){
+                    
+                    const element = createCustomElement(key);
+                    container.appendChild(element);
+
+       
+                    linhas = value.split(/\n\s*?(?=\n|$)/)
+                    linhas.forEach(secao => {
+                   
+                        const linhasDaSecao = secao.split('\n');         
+                        const button = createCustomElement('button', linhasDaSecao[1]);
+                        button.setAttribute('type','button')
+                        element.appendChild(button);
+                        
+                        button.addEventListener('click', () => {
+                       
+                            navigator.clipboard.writeText(linhasDaSecao[3])
+                              .then(() => {
+                             
+                              })
+                              .catch(err => {
+                                console.error('Erro ao copiar o atributo:', err);
+                              });
+                          });
+
+                      });
+                    
+
+                } else {
+                    const element = createCustomElement(key, value);
+                    container.appendChild(element);
+                }
                 
             } else {
 
