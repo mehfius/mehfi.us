@@ -66,9 +66,10 @@
 
         let tipo = createCustomElement('tipo');
         let label = createCustomElement('label','Tipo');
-        let input = createCustomElement('input','0')
+        let input = createCustomElement('input')
 
         input.setAttribute('type','hidden');
+        input.setAttribute('value',value);
 
         tipo.append(label)
 

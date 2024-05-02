@@ -14,6 +14,7 @@ window form textarea {
     padding: 20px;
     color: #b8b8b8;
     background-color: var(--input-background);
+    box-shadow: inset 0px 0px 2px 0px #000;
 }
 
 window form input {
@@ -37,6 +38,7 @@ window form button{
     margin-left: 10px;
     border: 1px solid #5c5656;
     letter-spacing: 1px;
+    box-shadow: 0px 0px 2px 0px #000;
 }
 
 window form button[selected="1"]{
@@ -59,4 +61,5 @@ window footer button{
     float: right;
     margin-left: 10px;    
     border: 0;
+    box-shadow: 0px 0px 2px 0px #000;
 }

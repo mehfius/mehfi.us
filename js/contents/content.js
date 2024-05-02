@@ -22,8 +22,6 @@
         const item = createCustomElement('item');
         const container = createCustomElement('container');
 
-
-
         for (const [key, value] of Object.entries(dataItem)) {
     
             if(key=='created_at'){
