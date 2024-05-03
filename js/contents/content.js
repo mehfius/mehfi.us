@@ -27,7 +27,7 @@
             if(key=='created_at'){
 
                 moment.locale('pt-br');
-                const element = createCustomElement(key, moment(value, 'YYYY-MM-DD HH24:mm').utc(true).fromNow());
+                const element = createCustomElement(key, moment(value, 'YYYY-MM-DD HH24:mm').utc(false).fromNow());
                 container.appendChild(element);
 
             } else if (key=='tipo_icon') {
