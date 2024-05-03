@@ -6,7 +6,7 @@
 
         var json = {};
 
-        json.name = 'content_list'
+        json.name = 'content_form'
         json.token = JSON.parse(sessionStorage.getItem('token'))
         json.id = JSON.parse(sessionStorage.getItem('contents_id'))
 
@@ -28,7 +28,7 @@
     
         let form = createCustomElement('form');
         
-            form.append(formTipo(data[0].tipo,data[0].tipos));
+            form.append(formTipo(data[0].tipo, data[0].tipos));
 
             form.append(description);
     
@@ -62,7 +62,7 @@
 
     }
 
-    function formTipo(value,data) {
+    function formTipo(value = 0,data) {
 
         let tipo = createCustomElement('tipo');
         let label = createCustomElement('label','Tipo');
