@@ -77,6 +77,24 @@ body > content > item > container > description:has(button){
 
 }
 
+@media (max-width: 700px) {
+    body > content > item > container > description:has(button){
+      grid-template-columns: repeat(3, 1fr); /* Change to 2 columns for smaller widths */
+    }
+  }
+
+@media (max-width: 600px) {
+    body > content > item > container > description:has(button){
+      grid-template-columns: repeat(2, 1fr); /* Change to 2 columns for smaller widths */
+    }
+  }
+
+  @media (max-width: 400px) {
+    body > content > item > container > description:has(button){
+      grid-template-columns: repeat(1, 1fr); /* Change to 2 columns for smaller widths */
+    }
+  }
+
 body > content > item > container > description > button{
     
     padding: 8px 16px;
@@ -125,3 +143,4 @@ body > content > item > menu > button {
     box-shadow: 0px 0px 2px 0px #000;
 
 }
+
