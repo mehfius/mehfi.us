@@ -50,7 +50,7 @@
 
             } else if (key=='description') { 
 
-                if(dataItem['tipo']==3){
+                if(dataItem['tipo']==4){
                     
                     const element = createCustomElement(key);
                     container.appendChild(element);
