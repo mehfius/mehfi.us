@@ -62,7 +62,7 @@
 
     }
 
-    function formTipo(value = 0,data) {
+    function formTipo(value = 1,data) {
 
         let tipo = createCustomElement('tipo');
         let label = createCustomElement('label','Tipo');
