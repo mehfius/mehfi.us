@@ -13,7 +13,17 @@
 
     const data = await supabase_fetch(json);
 
-    load_html('/html/header.html',document.querySelector("body > header"));
+    document.querySelector("body > header").innerHTML = ''
+    
+    let button_novo = createCustomElement('button', 'Novo');
+    
+    button_novo.addEventListener('click', () => {
+                      
+        rota_form();
+
+    });
+
+    document.querySelector("body > header").append(button_novo);
 
     document.querySelector('body > content').innerHTML = '';
 
