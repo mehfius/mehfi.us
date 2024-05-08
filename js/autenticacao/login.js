@@ -23,8 +23,6 @@
             formData[fieldName] = field.value;
         });
 
-        //var jsonData = JSON.stringify(formData);
-
         const res = await supabase_fetch(formData);
 
         if(res.status == 1){

@@ -104,6 +104,27 @@ const supabase_fetch = function (data) {
 
 }
 
+const supabase_fetch_doctor = function (data) {
+
+  const myHeaders = new Headers();
+  myHeaders.append("Apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmbGh1cXF6am1na2Roamd4em5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjE5MDE1NzIsImV4cCI6MTk3NzQ3NzU3Mn0.h8KOM1CCXPY80ImmmsrLmGp0Wib0z8C80KNFFGjzcn8");
+  myHeaders.append("Content-Type", "application/json");
+
+  const raw = JSON.stringify({data});
+
+  const requestOptions = {
+      method: "POST",
+      headers: myHeaders,
+      body: raw,
+      redirect: "follow"
+  };
+
+  return fetch("https://vflhuqqzjmgkdhjgxzni.supabase.co/rest/v1/rpc/"+data.name, requestOptions)
+  .then((response) => response.json())
+  .catch((error) => console.error(error));        
+
+}
+
 function rota_contents() { load('/js/contents/content.js'); }
 function rota_formlogin() { load('/js/autenticacao/form_login.js') }
 function rota_form() { load('/js/form.js') }

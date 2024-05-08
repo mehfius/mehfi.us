@@ -20,17 +20,22 @@
     
         let footer = createCustomElement('footer');
     
+        let title = createCustomElement('title');
+        let title_label = createCustomElement('label','Título');
+        let title_input = createCustomElement('input');
+            title.append(title_label, title_input);
+            title_input.setAttribute('value',data[0].title || '')
+
         let description = createCustomElement('description');
         let description_label = createCustomElement('label','Descrição');
-        let description_textarea = createCustomElement('textarea', data[0].description);
-    
-            description.append(description_label,description_textarea);
+        let description_textarea = createCustomElement('textarea', data[0].description);    
+            description.append(description_label, description_textarea || '');
     
         let form = createCustomElement('form');
         
             form.append(formTipo(data[0].tipo, data[0].tipos));
 
-            form.append(description);
+            form.append(title, description);
     
         let button_salvar = createCustomElement('button','Salvar');
         let button_cancelar = createCustomElement('button','Cancelar');

@@ -18,9 +18,21 @@ window form textarea {
 }
 
 window form input {
+    float: left;
+    width: 100%;
+    border-radius: 5px;
+    border: 0;
+    padding: 20px;
+    color: #b8b8b8;
+    background-color: var(--input-background);
+    box-shadow: inset 0px 0px 2px 0px #000;
+}
+
+window form title {
     width: 100%;
     float: left;
-    color: #fff;
+    display: block;
+    margin-bottom: 20px;
 }
 
 window form description {
