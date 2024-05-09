@@ -135,3 +135,6 @@ function rota_salvar() { load('/js/form_salvar.js') }
 function rota_header() { load('/js/page/header.js') }
 
 function rota_login() { load('/js/autenticacao/login.js') }
+
+
+function include_contents_csv() { load('/js/contents/content_csv.js') }

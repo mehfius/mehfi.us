@@ -2,7 +2,9 @@
 
     await load('/css/header.css')
     await load('/css/item.css')
-    
+
+    include_contents_csv();
+
     var json = {};
 
         json.name = 'content_list'
@@ -185,88 +187,6 @@
         return element;
 
 
-    }
-
-    function downloadCSV(e) {
-
-        console.log(e);
-        
-        const lines = [];
-        const columnNames = ['email', 'label', 'cpf', 'endereco', 'whatsapp']; // Colunas fixas conforme o exemplo
-    
-        // Adicionar nomes das colunas como primeira linha
-        lines.push(columnNames.join(','));
-    
-        // Iterar sobre os elementos
-        const elements = e.getElementsByTagName('email');
-        for (let i = 0; i < elements.length; i++) {
-            const email = elements[i].textContent;
-            const label = elements[i].nextElementSibling.textContent;
-            const cpf = elements[i].nextElementSibling.nextElementSibling.textContent;
-            const endereco = elements[i].nextElementSibling.nextElementSibling.nextElementSibling.textContent;
-            const whatsapp = elements[i].nextElementSibling.nextElementSibling.nextElementSibling.nextElementSibling.textContent;
-    
-            // Adicionar os dados da linha ao array
-            lines.push(`${email},${label},${cpf},${endereco},${whatsapp}`);
-        }
-    
-        // Criar o conteúdo do arquivo CSV
-        const csvContent = lines.join('\n');
-    
-        // Criar um objeto Blob com o conteúdo do CSV
-        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-    
-        // Criar um link para download do arquivo CSV
-        const link = document.createElement('a');
-        link.href = window.URL.createObjectURL(blob);
-        link.setAttribute('download', 'data.csv');
-    
-        // Simular o clique no link para iniciar o download
-        link.click();
-    }
-
-    function fetchCSVAndPrint(url) {
-        fetch(url)
-            .then(response => response.text())
-            .then(text => {
-               
-                    const lines = text.split('\n');
-                    const objects = [];
-                    const existingEmails = new Set();
-
-                    for (let i = 0; i < lines.length; i++) {
-                        const columns = lines[i].split(',');
-                        if (columns.length >= 9) {
-                            
-                            const cpf = columns[5].replace(/\D/g, '') || '';
-                            const whatsapp = columns[8].replace(/\D/g, '') || null;
-                            const nome = columns[4].trim()
-                            const email = columns[2].trim()
-             
-                            if (!existingEmails.has(email)) {
-                                const obj = {
-                                    email: email,
-                                    nome: nome,
-                                    cpf: cpf,
-                                    whatsapp: whatsapp,
-                                    forca_tarefa_rs: true
-                                };
-                                objects.push(obj);
-                                existingEmails.add(email);
-                            }
-                        }
-                    }
-                    console.log(objects);
-
-                    var json = {};
-
-                    json.name = 'users_insert'
-                    json.data = objects
-
-                    const status = supabase_fetch_doctor(json);
-
-            })
-            .catch(error => console.error('Ocorreu um erro:', error));
     }
 
     document.querySelector('loading').removeAttribute('show');
