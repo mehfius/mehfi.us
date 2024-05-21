@@ -13,7 +13,7 @@ const load = async function(url){
 
     switch (ext) {
       case 'js':
-
+        loading_box(url,url);
         let previousScripts = document.querySelectorAll('script[src="' + url + '"]');
 
         const script = document.createElement('script');
@@ -21,6 +21,8 @@ const load = async function(url){
         script.onload =  () => {
           setTimeout(() => {
             previousScripts.forEach(s => { s.remove(); });
+            document.querySelector('loading_box item[url="'+url+'"]').remove();
+            console.log('loading_box item[url="'+url+'"]')
             resolve();
           }, 0); 
         };
@@ -29,7 +31,7 @@ const load = async function(url){
 
         break;
       case 'css':
-        
+        loading_box(url,url);
         let previousLinks = document.querySelectorAll('link[rel="stylesheet"][href="' + url + '"]');
 
         const link = document.createElement('link');
@@ -38,6 +40,8 @@ const load = async function(url){
         link.onload = () => {
           setTimeout(() => {
             previousLinks.forEach(s => { s.remove(); });
+            document.querySelector('loading_box item[url="'+url+'"]').remove();
+            console.log('loading_box item[url="'+url+'"]')
             resolve();
           }, 0);
         };
@@ -51,6 +55,17 @@ const load = async function(url){
     }
   });
 }
+
+const loading_box = async function(label,url){
+
+  let loading_box = document.querySelector('loading_box');
+  let item = document.createElement('item');
+  item.textContent = label;
+  item.setAttribute('url',url)
+  loading_box.append(item)
+
+}
+
 const load_html = async function(url,e){
 
     fetch(url)
