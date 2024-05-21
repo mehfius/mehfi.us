@@ -59,10 +59,12 @@ const load = async function(url){
 const loading_box = async function(label,url){
 
   let loading_box = document.querySelector('loading_box');
+  let icon = document.createElement('icon')
+  icon.setAttribute('classe','fa-solid fa-spinner')
   let item = document.createElement('item');
   item.textContent = label;
   item.setAttribute('url',url)
-  loading_box.append(item)
+  loading_box.append(icon,item)
 
 }
 
