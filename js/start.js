@@ -434,6 +434,19 @@ function leave() {
 
 }
 
+function addVideoPlayer(stream) {
+  
+  var template = new DOMParser().parseFromString('<user><video autoplay volume="10"></video></user>', 'text/html')
+      template.getElementsByTagName('video')[0].srcObject = stream
+  
+  var divPlayer = template.body.childNodes[0]
+  var videocall = document.querySelector("videocall");
+
+      videocall.appendChild(divPlayer);
+
+  return divPlayer
+}
+
 class User {
   constructor(id) {
     this.id = id;
