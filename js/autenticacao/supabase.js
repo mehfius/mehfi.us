@@ -18,7 +18,12 @@
   // Função genérica para login com OAuth
   async function signInWithOAuth(provider) {
     try {
-      const { data, error } = await supabaseClient.auth.signInWithOAuth({ provider });
+      const { data, error } = await supabaseClient.auth.signInWithOAuth({ 
+        provider,
+        options: {
+          redirectTo: 'https://mehfi.us'
+        }
+      });
 
       if (error) throw new Error(error.message);
 
