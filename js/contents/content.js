@@ -1,194 +1,173 @@
 (async function (){
+  sessionStorage.removeItem('contents_form');
+  document.body.innerHTML = ''
+  let e_header = jsonToObject({
+    tag: 'header'
+  });
 
-    await load('/css/header.css')
-    await load('/css/item.css')
+  let e_loading = jsonToObject({
+    tag: 'loading',
+    class: '_it4vx _72fik'
+  });
 
-    include_contents_csv();
+  let e_content = jsonToObject({
+    tag: 'content'
+  });
 
-    var json = {};
+  let e_footer = jsonToObject({
+    tag: 'footer'
+  });
 
-        json.name = 'content_list'
-        json.token = JSON.parse(sessionStorage.getItem('token'))
-        json.tipo = JSON.parse(sessionStorage.getItem('contents_tipo'))
+  let e_loading_box = jsonToObject({
+    tag: 'loading_box'
+  });
 
-        sessionStorage.removeItem('contents_id')
+  e_footer.append(e_loading_box);
 
-    const data = await supabase_fetch(json);
+  document.body.append(e_header, e_loading, e_content, e_footer);
 
-    document.querySelector("body > header").innerHTML = ''
+  await speedj('/css/header.css');
+  await speedj('/css/item.css');
 
-    document.querySelector("body > header").append(tipo(data.tipo));
-    
-    let button_novo = createCustomElement('button', 'Novo');
-    
-    button_novo.addEventListener('click', () => {
-                      
-        rota_form();
+  var json = {};
+  json.name = 'content';
+  json.tipo = JSON.parse(sessionStorage.getItem('tipo'));
+  sessionStorage.removeItem('contents_id');
 
-    });
+  const data = await supabase_fetch_rls(json, 'tipo', json.tipo);
+  e_header.append(tipo());
+  
+  let e_button_videocall = jsonToObject({
+    tag: 'button',
+    textnode: 'Videocall',
+    onclick: () => speedj('js/videocall/index.js')
+  });
 
-    document.querySelector("body > header").append(button_novo);
+  let e_button_novo = jsonToObject({
+    tag: 'button',
+    textnode: 'Novo',
+    onclick: () => rota_form()
+  });
 
-    document.querySelector('body > content').innerHTML = '';
+  e_header.append(e_button_videocall, e_button_novo);
+  e_content.innerHTML = '';
+  
+  for (const dataItem of data) {
+    const e_item = jsonToObject({ tag: 'item' });
+    const e_container = jsonToObject({ tag: 'container' });
 
-    for (const dataItem of data.rows) {
+    // Criar elementos separadamente
+    let e_label = null;
+    let e_created_at = null;
+    let e_description = null;
 
-        const item = createCustomElement('item');
-        const container = createCustomElement('container');
-
-        for (const [key, value] of Object.entries(dataItem)) {
-    
-            if(key=='created_at'){
-
-                moment.locale('pt-br');
-                const element = createCustomElement(key, moment(value, 'YYYY-MM-DD HH24:mm').utc(false).fromNow());
-                container.appendChild(element);
-
-            } else if (key=='tipo_icon') {
-
-                const element = createCustomElement('icon');
-                element.setAttribute('class',`fa-solid ${value}`)
-                container.appendChild(element);
-
-            } else if (key=='description') { 
-
-                if(dataItem['tipo']==4){
-                    
-                    const element = createCustomElement(key);
-                    container.appendChild(element);
-       
-                    linhas = value.split(/\n\s*?(?=\n|$)/)
-
-                    linhas.forEach(secao => {
-                   
-                        const linhasDaSecao = secao.split('\n');         
-                        const button = createCustomElement('button', linhasDaSecao[1]);
-                        button.setAttribute('type','button')
-                        element.appendChild(button);
-                        
-                        button.addEventListener('click', () => {
-                       
-                            navigator.clipboard.writeText(linhasDaSecao[3])
-                            .then(() => {
-                            
-                            })
-                            .catch(err => {
-                            console.error('Erro ao copiar o atributo:', err);
-                            });
-
-                        });
-
-                    });
-
-                } else if(dataItem['tipo']==6){
-
-                    const button = createCustomElement('button','Download CSV')
-
-                    button.addEventListener('click', () => {
-                        fetchCSVAndPrint(value)
-                    })
-
-                    const element = createCustomElement('description');
-                    element.append(button)
-                    container.appendChild(element);
-
-                   
-
-                } else {
-
-                    const element = createCustomElement(key, value);
-                    container.appendChild(element);
-
-                }
-                
-            } else {
-
-                const element = createCustomElement(key, value);
-                container.appendChild(element);
-
-            }      
-            
-        }
-    
-        const menu = createCustomElement('menu');
-
-        const button_deletar = createCustomElement('button', 'Deletar');
-        const button_editar = createCustomElement('button', 'Editar');
-
-        button_editar.onclick = function (){
-
-            sessionStorage.setItem('contents_id',dataItem['id'])
-            rota_form()
-
-        }
-
-        button_deletar.onclick = function (){
-            
-            if(confirm('Deseja remover este item?')){
-                sessionStorage.setItem('contents_id',dataItem['id'])
-                rota_contents_delete()
-            }
-
-        }        
-
-        menu.appendChild(button_deletar);
-        menu.appendChild(button_editar);
-    
-        item.appendChild(container);
-        item.appendChild(menu);
-        
-        document.querySelector('content').append(item);
-
-    }
-    
-    function createCustomElement(name, value) {
-
-        const element = document.createElement(name.toLowerCase()); 
-        element.textContent = value;
-
-        return element;
-
-    }
-
-    function tipo(data){
-
-        const element = createCustomElement('tipo');
-
-        let tipo = JSON.parse(sessionStorage.getItem('contents_tipo'))
-
-        for (const fields of data) {
-    
-            const button = createCustomElement('button');
-    
-            button.setAttribute('class',`fa-solid ${fields.icon}`)
-
-            if(tipo == fields.id){
-                button.setAttribute('selected','1');
-            }
-
-            button.addEventListener('click', () => {
-                      
-                document.querySelectorAll('body > header > tipo > button').forEach(button => button.removeAttribute('selected'));
-    
-                button.setAttribute('selected','1');
-
-                sessionStorage.setItem('contents_tipo', fields.id); 
-
-                rota_contents();
-        
+    for (const [key, value] of Object.entries(dataItem)) {
+      if (key == 'label') {
+        e_label = jsonToObject({
+          tag: key,
+          textnode: value
+        });
+      } else if (key == 'created_at') {
+        moment.locale('pt-br');
+        e_created_at = jsonToObject({
+          tag: key,
+          textnode: moment(value, 'YYYY-MM-DD HH24:mm').utc(false).fromNow()
+        });
+      } else if (key == 'description') {
+        if (dataItem['tipo'] == 4) {
+          e_description = jsonToObject({ tag: key });
+          const linhas = value.split(/\n\s*?(?=\n|$)/);
+          
+          linhas.forEach(secao => {
+            const linhas_da_secao = secao.split('\n');
+            const e_button = jsonToObject({
+              tag: 'button',
+              textnode: linhas_da_secao[1],
+              type: 'button',
+              onclick: () => {
+                navigator.clipboard.writeText(linhas_da_secao[3])
+                  .catch(err => console.error('Erro ao copiar o atributo:', err));
+              }
             });
-
-            button.setAttribute('type','button')
-    
-            element.append(button)
-    
+            e_description.append(e_button);
+          });
+        } else if (dataItem['tipo'] == 6) {
+          e_description = jsonToObject({ tag: key });
+          const e_button = jsonToObject({
+            tag: 'button',
+            textnode: 'Download CSV',
+            onclick: () => fetchCSVAndPrint(value)
+          });
+          e_description.append(e_button);
+        } else {
+          e_description = jsonToObject({
+            tag: key,
+            textnode: value
+          });
         }
-
-        return element;
-
-
+      }
     }
 
-    document.querySelector('loading').removeAttribute('show');
+    // Adicionar elementos na ordem especificada
+    if (e_label) e_container.append(e_label);
+    if (e_created_at) e_container.append(e_created_at);
+    if (e_description) e_container.append(e_description);
+
+    const e_menu = jsonToObject({ tag: 'menu' });
     
-})()
+    const e_button_deletar = jsonToObject({
+      tag: 'button',
+      textnode: 'Deletar',
+      onclick: () => {
+        if (confirm('Deseja remover este item?')) {
+          sessionStorage.setItem('contents_id', dataItem['id']);
+          rota_contents_delete();
+        }
+      }
+    });
+    
+    const e_button_editar = jsonToObject({
+      tag: 'button',
+      textnode: 'Editar',
+      onclick: async () => {
+        sessionStorage.setItem('contents_id', dataItem['id']);
+        await speedj('js/form/form.js');
+      }
+    });
+    
+    e_menu.append(e_button_deletar, e_button_editar);
+    e_item.append(e_container, e_menu);
+    e_content.append(e_item);
+  }
+
+  function tipo() {
+    const e_element = jsonToObject({ tag: 'tipo' });
+    let tipos = JSON.parse(sessionStorage.getItem('contents_tipos'));
+    let tipo_atual = JSON.parse(sessionStorage.getItem('tipo'));
+    
+    for (const tipo_item of tipos) {
+      const e_button = jsonToObject({
+        tag: 'button',
+        class: `fa-solid ${tipo_item.icon}`,
+        type: 'button',
+        onclick: () => {
+          document.querySelectorAll('body > header > tipo > button').forEach(button => button.removeAttribute('selected'));
+          e_button.setAttribute('selected', '1');
+          sessionStorage.setItem('tipo', tipo_item.id);
+          rota_contents();
+        }
+      });
+      
+      if (tipo_atual == tipo_item.id) {
+        e_button.setAttribute('selected', '1');
+      }
+      
+      e_element.append(e_button);
+    }
+    
+    return e_element;
+  }
+
+  document.querySelector('loading').removeAttribute('show');
+
+})();

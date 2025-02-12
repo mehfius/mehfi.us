@@ -40,7 +40,14 @@ body > content > item > container > tipo_label{
     padding: 20px;
 
 }
+body > content > item > container > label{
 
+    float: left;
+    font-size: 10pt;
+
+    padding: 20px;
+
+}
 body > content > item > container > created_at{
 
     float: right;
@@ -56,6 +63,25 @@ body > content > item > container > icon{
     padding: 20px 0 20px 20px;
 
 }
+
+body > content > item > container > a{
+
+    display: none;
+
+}
+
+body > content > item > container > d{
+
+    display: none;
+
+}
+
+body > content > item > container > shared{
+
+    display: none;
+
+}
+
 body > content > item > container > description{
 
     float: left;

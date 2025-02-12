@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login com GitHub - Supabase</title>
+</head>
+<body>
+  <h1>Login com GitHub</h1>
+  <button id="github-login">Login com GitHub</button>
+  <button id="github-logout" style="display: none;">Sair</button>
+  <p id="user-info"></p>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+  <script>
+    // Substitua pelo seu URL do Supabase e chave pública anon
+    const key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtnd25ucWJwb2hobGRmcm9vZ21tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI4NTc2MjgsImV4cCI6MjAyODQzMzYyOH0.Mrxll-WATVuV0NXB36Tf2LJBf5KDZRsXSqFhLmTVbME";
+    const url = "https://kgwnnqbpohhldfroogmm.supabase.co/";
+    // Criação do cliente Supabase
+    const { createClient } = supabase;
+    const supabaseClient = createClient(url, key);
+
+    // Função para autenticar com OAuth (GitHub como exemplo)
+    async function signInWithGitHub() {
+      try {
+        const { data, error } = await supabaseClient.auth.signInWithOAuth({
+          provider: 'github',
+          options: {
+            //redirectTo: window.location.origin,
+            //skipBrowserRedirect: false
+          }
+        });
+
+        if (error) {
+          console.error('Erro ao fazer login:', error.message);
+          return;
+        }
+
+        // O restante do código só será executado após o redirecionamento bem-sucedido
+        if (data.session) {
+          const userInfo = await supabaseClient.auth.getUser();
+          if (userInfo.data.user) {
+            const userName = userInfo.data.user.user_metadata.full_name || "Usuário sem nome";
+            console.log('Bem-vindo,', userName);
+            document.getElementById('user-info').textContent = `Bem-vindo, ${userName}`;
+            toggleButtons(true);
+          }
+        }
+      } catch (err) {
+        console.error('Erro inesperado:', err);
+      }
+    }
+
+    // Função para fazer logout
+    async function signOut(event) {
+      event.preventDefault();
+      try {
+        const { error } = await supabaseClient.auth.signOut();
+        if (error) {
+          console.error('Erro ao fazer logout:', error.message);
+          return;
+        }
+        document.getElementById('user-info').textContent = '';
+        toggleButtons(false);
+        console.log('Logout realizado com sucesso');
+      } catch (err) {
+        console.error('Erro inesperado durante logout:', err);
+      }
+    }
+
+    // Função para alternar visibilidade dos botões
+    function toggleButtons(isLoggedIn) {
+      document.getElementById('github-login').style.display = isLoggedIn ? 'none' : 'block';
+      document.getElementById('github-logout').style.display = isLoggedIn ? 'block' : 'none';
+    }
+
+    // Função para inicializar o fluxo de login e verificar o estado
+    async function checkAuthState() {
+      try {
+        const { data: { session } } = await supabaseClient.auth.getSession();
+        if (session) {
+          console.log('Sessão ativa:', session);
+          const userName = session.user.user_metadata.full_name || "Usuário sem nome";
+          const userEmail = session.user.email || "Email não disponível";
+          console.log('Bem-vindo de volta,', userName);
+          document.getElementById('user-info').textContent = `Bem-vindo de volta, ${userName} (${userEmail})`;
+          toggleButtons(true);
+        } else {
+          console.log('Nenhuma sessão ativa, por favor faça login.');
+          toggleButtons(false);
+        }
+      } catch (err) {
+        console.error('Erro ao verificar estado da autenticação:', err);
+        toggleButtons(false);
+      }
+    }
+
+    // Chama o checkAuthState quando a página for carregada
+    document.addEventListener('DOMContentLoaded', checkAuthState);
+
+    // Adiciona os eventos de login e logout
+    document.getElementById('github-login').addEventListener('click', signInWithGitHub);
+    document.getElementById('github-logout').addEventListener('click', signOut);
+  </script>
+</body>
+</html>

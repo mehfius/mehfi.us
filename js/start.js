@@ -1,10 +1,24 @@
-const key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtnd25ucWJwb2hobGRmcm9vZ21tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI4NTc2MjgsImV4cCI6MjAyODQzMzYyOH0.Mrxll-WATVuV0NXB36Tf2LJBf5KDZRsXSqFhLmTVbME"
-const url = "https://kgwnnqbpohhldfroogmm.supabase.co/"
-const supabase = { "key":key, "url": url }
+const jkey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtnd25ucWJwb2hobGRmcm9vZ21tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI4NTc2MjgsImV4cCI6MjAyODQzMzYyOH0.Mrxll-WATVuV0NXB36Tf2LJBf5KDZRsXSqFhLmTVbME"
+const jurl = "https://kgwnnqbpohhldfroogmm.supabase.co/"
+const json = { "key":jkey, "url": jurl }
 
-sessionStorage.setItem("supabase", JSON.stringify(supabase));
+sessionStorage.setItem("supabasekey", jkey);
+sessionStorage.setItem("supabaseurl", jurl);
 
-const load = async function(url){
+  const contents_tipos = [
+      { id: "4", icon: "fa-key", label: "Autenticação" },
+      { id: "3", icon: "fa-toolbox", label: "Configuração" },
+      { id: "2", icon: "fa-file", label: "Arquivo" },
+      { id: "1", icon: "fa-ghost", label: "Sem tipo" },
+      { id: "5", icon: "fa-file-medical", label: "Prescrição" },
+      { id: "6", icon: "fa-file-csv", label: "CSV" },
+      { id: "7", icon: "fa-file-pdf", label: "PDF" }
+  ];
+
+  sessionStorage.setItem('contents_tipos', JSON.stringify(contents_tipos));
+
+
+/* const load = async function(url){
   return new Promise((resolve, reject) => {
 
     const ext = url.split('.').pop().toLowerCase();
@@ -54,7 +68,73 @@ const load = async function(url){
         reject(`Tipo de arquivo desconhecido: ${ext}`);
     }
   });
-}
+} */
+
+  function get_session_storage(key){
+    var storage = JSON.parse(sessionStorage.getItem(key));  
+    return storage;    
+  }
+  
+  const speedj = async function(url){
+
+    if (!url.startsWith('https')) {
+      if (window.location.href.includes("mehfi.us")) {
+        url = 'https://mehfi.us/' + url
+      } else {
+        url = 'http://127.0.0.1:3001/' + url
+        url = url + '?v=' + new Date().getTime()     
+      }
+    }
+  
+    return new Promise((resolve, reject) => {
+
+      const ext = url.split('?')[0].split('.').pop().toLowerCase();
+  
+      switch (ext) {
+        case 'js':
+          // Remove o parâmetro v= da URL para comparação
+          const base_url = url.split('?')[0];
+          let previousScripts = document.querySelectorAll('script[src^="' + base_url + '"]');
+  
+          const script = document.createElement('script');
+          script.src = url;
+          script.onload =  () => {
+            setTimeout(() => {
+              previousScripts.forEach(s => { s.remove(); });
+              //document.querySelector('loading_box item[url="'+url+'"]').remove();
+              //console.log('loading_box item[url="'+url+'"]')
+              resolve();
+            }, 0); 
+          };
+          script.onerror = () => reject(`Erro ao carregar ${url}`); 
+          document.head.appendChild(script);
+  
+          break;
+        case 'css':
+          // Remove o parâmetro v= da URL para comparação
+          const base_url_css = url.split('?')[0];
+          let previousLinks = document.querySelectorAll('link[rel="stylesheet"][href^="' + base_url_css + '"]');
+  
+          const link = document.createElement('link');
+          link.rel = 'stylesheet';
+          link.href = url;
+          link.onload = () => {
+            setTimeout(() => {
+              previousLinks.forEach(s => { s.remove(); });
+              //document.querySelector('loading_box item[url="'+url+'"]').remove();
+              //console.log('loading_box item[url="'+url+'"]')
+              resolve();
+            }, 0);
+          };
+          link.onerror = () => reject(`Erro ao carregar ${url}`); 
+          document.head.appendChild(link);
+  
+          break;
+        default:
+          reject(`Tipo de arquivo desconhecido: ${ext}`);
+      }
+    });
+  }
 
 const loading_box = async function(label,url){
 
@@ -69,7 +149,14 @@ const loading_box = async function(label,url){
 }
 
 const load_html = async function(url,e){
-
+    if (!url.startsWith('https')) {
+      if (window.location.href.includes("mehfi.us")) {
+        url = 'https://mehfi.us/' + url;
+      } else {
+        url = 'http://127.0.0.1:3001/' + url;
+        url = url + '?v=' + new Date().getTime();
+      }
+    }
     fetch(url)
     .then(response => {
      
@@ -97,6 +184,74 @@ const load_html = async function(url,e){
     .catch(error => {
       console.error('Erro:', error);
     });
+
+}
+
+function jsonToObject(json){
+
+  var field = document.createElement(json.tag);
+        
+  Object.entries(json).forEach(([key, value]) => {
+    
+    switch (key) {
+    case 'innerhtml':field.innerHTML=json.innerhtml;break;
+    case 'tag':break;        
+    case 'textnode':field.appendChild(document.createTextNode(json.textnode));break; 
+    case 'pattern':field.setAttribute(key,value);break;  
+    case 'value':
+      if (json.tag === 'textarea') {
+        field.appendChild(document.createTextNode(json.value));
+      } else {
+        field.setAttribute("value",json.value);
+      }
+      break;
+    case 'onclick':field.onclick = value;break;
+    case 'onchange':field.onchange = value;break;    
+    case 'onkeyup':field.onkeyup = value;break; 
+    case 'onkeypress':field.onkeypress = value;break;           
+    case 'onclickold':field.setAttribute('onclick',value);break;    
+    default:field.setAttribute(key,value);}  
+    
+  })
+  
+  return field;
+ 
+}
+const supabase_fetch_rls = function (data, filtro = null, valor = null) {
+
+  const myHeaders = new Headers();
+  myHeaders.append("Apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtnd25ucWJwb2hobGRmcm9vZ21tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI4NTc2MjgsImV4cCI6MjAyODQzMzYyOH0.Mrxll-WATVuV0NXB36Tf2LJBf5KDZRsXSqFhLmTVbME");
+  myHeaders.append("Content-Type", "application/json");  
+
+  const auth_token = localStorage.getItem('sb-kgwnnqbpohhldfroogmm-auth-token');
+ 
+  if (auth_token) {
+    try {
+      const token_json = JSON.parse(auth_token);
+  
+      if (token_json && token_json.access_token) {
+        myHeaders.append("Authorization", `Bearer ${token_json.access_token}`);
+      }
+    } catch (error) {
+      console.error('Erro ao parsear token:', error);
+    }
+  }
+
+  let url = "https://kgwnnqbpohhldfroogmm.supabase.co/rest/v1/"+data.name;
+
+  if (filtro && valor) {
+    url += `?${filtro}=eq.${valor}`;
+  }
+
+  const requestOptions = {
+      method: "GET",
+      headers: myHeaders,
+      redirect: "follow"
+  };
+
+  return fetch(url, requestOptions)
+  .then((response) => response.json())
+  .catch((error) => console.error(error));        
 
 }
 
@@ -142,16 +297,241 @@ const supabase_fetch_doctor = function (data) {
 
 }
 
-function rota_contents() { load('/js/contents/content.js'); }
-function rota_formlogin() { load('/js/autenticacao/form_login.js') }
-function rota_form() { load('/js/form.js') }
+function rota_contents() { speedj('/js/contents/content.js'); }
+function rota_formlogin() { speedj('/js/autenticacao/form_login.js') }
+function rota_form() { speedj('/js/form/form.js') }
 
-function rota_contents_delete() { load('/js/contents/content_delete.js'); }
+function rota_contents_delete() { speedj('/js/contents/content_delete.js'); }
 
-function rota_salvar() { load('/js/form_salvar.js') }
-function rota_header() { load('/js/page/header.js') }
+function rota_salvar() { speedj('/js/form/form_salvar.js') }
+function rota_header() { speedj('/js/page/header.js') }
 
-function rota_login() { load('/js/autenticacao/login.js') }
+function rota_login() { speedj('/js/autenticacao/login.js') }
 
 
-function include_contents_csv() { load('/js/contents/content_csv.js') }
+function include_contents_csv() { speedj('/js/contents/content_csv.js') }
+
+
+var getUserMedia
+var myStream
+var socket
+const users = new Map()
+
+function start(data) {
+
+  navigator.mediaDevices.getUserMedia({
+    video: {
+      height: 480,
+      width: 640
+    }, audio: true
+  })
+    .then(function (stream) {
+      myStream = stream
+      document.getElementById('preview-player').srcObject = myStream
+      socket = initServerConnection(data);
+
+    }).catch(function (err) {
+      console.log(err)
+      alert(err)
+    })
+
+
+}
+
+function initServerConnection(data) {
+
+  var socket = io('https://socket-io-7yss.onrender.com', {
+    query: {
+      room: data.room,
+      user: data.user,
+      room_name: data.room_name,
+      card_date: data.card_date
+    }
+  })
+  
+  document.querySelector('videocall').setAttribute("status","entrando")
+  
+  socket.on('disconnect-user', function (data) {
+    var user = users.get(data.id)
+    if (user) {
+      users.delete(data.id)
+      user.selfDestroy()
+    }
+  })
+
+  socket.on('call', function (data) {
+
+    let user = new User(data.id)
+    user.pc = createPeer(user)
+    users.set(data.id, user)
+
+    createOffer(user, socket)
+  })
+
+  socket.on('offer', function (data) {
+ 
+    var user = users.get(data.id)
+    if (user) {
+      answerPeer(user, data.offer, socket)
+    } else {
+      let user = new User(data.id)
+      user.pc = createPeer(user)
+      users.set(data.id, user)
+      answerPeer(user, data.offer, socket)
+    }
+  })
+
+  socket.on('answer', function (data) {
+
+    var user = users.get(data.id)
+    if (user) {
+      user.pc.setRemoteDescription(data.answer)
+    }
+  })
+
+  socket.on('candidate', function (data) {
+    var user = users.get(data.id)
+    if (user) {
+      user.pc.addIceCandidate(data.candidate)
+    } else {
+      let user = new User(data.id)
+      user.pc = createPeer(user)
+      user.pc.addIceCandidate(data.candidate)
+      users.set(data.id, user)
+    }
+  })
+
+  socket.on('connect', function () {
+    document.querySelector('videocall').setAttribute("status","conectando")
+  })
+
+  socket.on('connect_error', function (error) {
+    
+    console.log('Connection ERROR!')
+    console.log(error)
+    document.querySelector('videocall').setAttribute("status","erro")
+    
+    setTimeout(() => {
+      
+      document.querySelector('videocall').setAttribute("status","reconectando")
+      socket.connect();
+      
+    }, 1000);
+    
+    leave()
+  })
+
+  return socket
+}
+
+function leave() {
+  socket.close()
+  for (var user of users.values()) {
+    user.selfDestroy()
+  }
+  users.clear()
+
+}
+
+class User {
+  constructor(id) {
+    this.id = id;
+  }
+
+  selfDestroy() {
+    if (this.player) {
+      this.player.remove()
+    }
+
+    if (this.pc) {
+      this.pc.close()
+      this.pc.onicecandidate = null
+      this.pc.ontrack = null
+      this.pc = null
+    }
+  }
+
+  sendMessage(message) {
+    if (this.dc) {
+      this.dc.send(message)
+    }
+  }
+}
+
+const { RTCPeerConnection } = window;
+
+function createPeer(user) {
+  const rtcConfiguration = {
+    iceServers: [{
+      urls: 'stun:stun.l.google.com:19302'
+    }]
+  }
+  var pc = new RTCPeerConnection(rtcConfiguration)
+  pc.onicecandidate = function (event) {
+    if (!event.candidate) {
+      return
+    }
+
+    socket.emit('candidate', {
+      id: user.id,
+      candidate: event.candidate
+    })
+  }
+
+  for (const track of myStream.getTracks()) {
+    pc.addTrack(track, myStream);
+  }
+
+  pc.ontrack = function (event) {
+    if (user.player) {
+      return
+    }
+    user.player = addVideoPlayer(event.streams[0])
+  }
+
+  pc.ondatachannel = function (event) {
+    user.dc = event.channel
+    setupDataChannel(user.dc)
+  }
+
+  return pc
+}
+
+function createOffer(user, socket) {
+  user.dc = user.pc.createDataChannel('chat')
+  setupDataChannel(user.dc)
+
+  user.pc.createOffer().then(function (offer) {
+    user.pc.setLocalDescription(offer).then(function () {
+      socket.emit('offer', {
+        id: user.id,
+        offer: offer
+      })
+    })
+  })
+}
+
+function answerPeer(user, offer, socket) {
+  user.pc.setRemoteDescription(offer).then(function () {
+    user.pc.createAnswer().then(function (answer) {
+      user.pc.setLocalDescription(answer).then(function () {
+        socket.emit('answer', {
+          id: user.id,
+          answer: answer
+        })
+      })
+    })
+  })
+}
+
+function setupDataChannel(dataChannel) {
+  dataChannel.onopen = checkDataChannelState
+  dataChannel.onclose = checkDataChannelState
+  dataChannel.onmessage = function (e) {
+    addMessage(e.data)
+  }
+}
+
+function checkDataChannelState(dataChannel) {
+  console.log('WebRTC channel state is:', dataChannel.type)
+}

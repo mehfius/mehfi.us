@@ -19,9 +19,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdn.socket.io/socket.io-2.3.0.js"></script>
   <script src="js/start.js"></script>
+  <script src="js/autenticacao/supabase.js"></script>
   <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
   <style>
     @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap");
 
@@ -61,18 +63,20 @@
       display: block;
     }
   </style>
+
 </head>
-
 <body onload="rota_formlogin()">
-  <header></header>
-  <loading class="_it4vx _72fik"></loading>
-  <content>
 
-  </content>
-  <footer>
-    <loading_box>
-    </loading_box>
-  </footer>
+
+ 
+  <script>
+    // Substitua pelo seu URL do Supabase e chave pública anon
+    const key = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtnd25ucWJwb2hobGRmcm9vZ21tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI4NTc2MjgsImV4cCI6MjAyODQzMzYyOH0.Mrxll-WATVuV0NXB36Tf2LJBf5KDZRsXSqFhLmTVbME";
+    const url = "https://kgwnnqbpohhldfroogmm.supabase.co/"; 
+    // Criação do cliente Supabase
+    const { createClient } = supabase;
+    const supabaseClient = createClient(url, key);
+  </script>
 </body>
 
 </html>
