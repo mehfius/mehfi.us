@@ -78,6 +78,7 @@ sessionStorage.setItem("supabaseurl", jurl);
   const speedj = async function(url){
 
     if (!url.startsWith('https')) {
+      console.log(window.location.href.includes("mehfi.us"))
       if (window.location.href.includes("mehfi.us")) {
         url = 'https://mehfi.us/' + url
       } else {
