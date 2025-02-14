@@ -1,5 +1,5 @@
 (async function (){ 
-
+    speedj('/js/videocall/videocall.css')
     // Remove o elemento videocall se já existir
     let existing_videocall = document.querySelector('videocall');
     if (existing_videocall) {

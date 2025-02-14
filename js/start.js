@@ -17,59 +17,6 @@ sessionStorage.setItem("supabaseurl", jurl);
 
   sessionStorage.setItem('contents_tipos', JSON.stringify(contents_tipos));
 
-
-/* const load = async function(url){
-  return new Promise((resolve, reject) => {
-
-    const ext = url.split('.').pop().toLowerCase();
-
-    document.querySelector('loading').setAttribute('show','1')
-
-    switch (ext) {
-      case 'js':
-        loading_box(url,url);
-        let previousScripts = document.querySelectorAll('script[src="' + url + '"]');
-
-        const script = document.createElement('script');
-        script.src = url;
-        script.onload =  () => {
-          setTimeout(() => {
-            previousScripts.forEach(s => { s.remove(); });
-            document.querySelector('loading_box item[url="'+url+'"]').remove();
-            console.log('loading_box item[url="'+url+'"]')
-            resolve();
-          }, 0); 
-        };
-        script.onerror = () => reject(`Erro ao carregar ${url}`); 
-        document.head.appendChild(script);
-
-        break;
-      case 'css':
-        loading_box(url,url);
-        let previousLinks = document.querySelectorAll('link[rel="stylesheet"][href="' + url + '"]');
-
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
-        link.href = url;
-        link.onload = () => {
-          setTimeout(() => {
-            previousLinks.forEach(s => { s.remove(); });
-            document.querySelector('loading_box item[url="'+url+'"]').remove();
-            console.log('loading_box item[url="'+url+'"]')
-            resolve();
-          }, 0);
-        };
-        link.onerror = () => reject(`Erro ao carregar ${url}`); 
-        document.head.appendChild(link);
-
-
-        break;
-      default:
-        reject(`Tipo de arquivo desconhecido: ${ext}`);
-    }
-  });
-} */
-
   function get_session_storage(key){
     var storage = JSON.parse(sessionStorage.getItem(key));  
     return storage;    
@@ -318,14 +265,14 @@ var myStream
 var socket
 const users = new Map()
 
-function start(data) {
+/* function start(data) {
 
-  navigator.mediaDevices.getUserMedia({
-    video: {
-      height: 480,
-      width: 640
-    }, audio: true
-  })
+    navigator.mediaDevices.getUserMedia({
+      video: {
+        height: 480,
+        width: 640
+      }, audio: true
+    })
     .then(function (stream) {
       myStream = stream
       document.getElementById('preview-player').srcObject = myStream
@@ -337,6 +284,24 @@ function start(data) {
     })
 
 
+} */
+
+async function start(data) {
+  try {
+    const screenStream = await navigator.mediaDevices.getDisplayMedia({ video: true, audio: true });
+    const audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+
+    screenStream.getAudioTracks().forEach(track => {
+      screenStream.addTrack(track);
+    });
+
+    myStream = screenStream;  
+    document.getElementById('preview-player').srcObject = myStream;
+    socket = initServerConnection(data);
+  } catch (err) {
+    console.log(err);
+    alert(err);
+  }
 }
 
 function initServerConnection(data) {
