@@ -1,44 +1,38 @@
-(async function (){
+(async function () {
+    document.body.innerHTML = ''
+    const e_login = jsonToObject({ tag: 'login' });
+    const e_fields = jsonToObject({ tag: 'fields' });
 
-    var fields = document.querySelectorAll("fields input");
-    var isEmpty = false;
+    e_fields.append(
+        jsonToObject({ tag: 'label', innerhtml: 'Email: ' }),
+        jsonToObject({ tag: 'input', type: 'text' }),
+        jsonToObject({ tag: 'label', innerhtml: 'Senha: ' }),
+        jsonToObject({ tag: 'input', type: 'password' })
+    );
 
-    for (var i = 0; i < fields.length; i++) {
-        if (fields[i].value === "") {
-            isEmpty = true;
-            break;
-        }
-    }
+    const e_buttons = jsonToObject({ tag: 'buttons' });
+    e_buttons.append(
+        jsonToObject({
+            tag: 'button',
+            id: 'login',
+            innerhtml: 'login'
+        }),
+        jsonToObject({
+            tag: 'button',
+            innerhtml: 'Cadastrar'
+        }),
+        jsonToObject({
+            tag: 'button',
+            id: 'git_login',
+            innerhtml: 'Git Hub'
+        }),
+        jsonToObject({
+            tag: 'button',
+            id: 'google_login',
+            innerhtml: 'Google'
+        })
+    );
 
-    if (isEmpty) {
-
-        alert("Por favor, preencha todos os campos.");
-
-    } else {
-
-        var formData = {};
-        formData.name = 'login';
-        fields.forEach(function(field) {
-            var fieldName = field.parentElement.tagName.toLowerCase();
-            formData[fieldName] = field.value;
-        });
-
-        const res = await supabase_fetch(formData);
-
-        if(res.status == 1){
-
-            sessionStorage.setItem("token", JSON.stringify(res.token));
-
-            rota_contents();
-          
-        }else{
-
-            alert('email ou senha invalido');
-
-        }
-
-    }
-
-    document.querySelector('loading').removeAttribute('show')
-
+    e_login.append(e_fields, e_buttons);
+    document.body.appendChild(e_login);
 })()

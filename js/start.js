@@ -25,7 +25,6 @@ sessionStorage.setItem("supabaseurl", jurl);
   const speedj = async function(url){
 
     if (!url.startsWith('https')) {
-      console.log(window.location.href.includes("mehfi.us"))
       if (window.location.href.includes("mehfi.us")) {
         url = 'https://mehfi.us/' + url
       } else {
@@ -245,7 +244,7 @@ const supabase_fetch_doctor = function (data) {
 
 }
 
-function rota_contents() { speedj('/js/contents/content.js'); }
+/* function rota_contents() { speedj('/js/contents/content.js'); } */
 function rota_formlogin() { speedj('/js/autenticacao/form_login.js') }
 function rota_form() { speedj('/js/form/form.js') }
 
