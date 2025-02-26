@@ -7,10 +7,12 @@
     const e_fields = jsonToObject({ tag: 'fields' });
 
     e_fields.append(
+        jsonToObject({ tag: 'label', innerhtml: 'Nome Completo: ' }),
+        jsonToObject({ tag: 'input', type: 'text', id: 'full_name', required: 'true' }),
         jsonToObject({ tag: 'label', innerhtml: 'Email: ' }),
-        jsonToObject({ tag: 'input', type: 'text' }),
+        jsonToObject({ tag: 'input', type: 'text', id: 'email' }),
         jsonToObject({ tag: 'label', innerhtml: 'Senha: ' }),
-        jsonToObject({ tag: 'input', type: 'password' })
+        jsonToObject({ tag: 'input', type: 'password', id: 'password' })
     );
 
     const e_actions = jsonToObject({ tag: 'actions' });
@@ -21,27 +23,28 @@
             innerhtml: 'Send',
             onclick: async function () {
                 try {
-                    const email = e_fields.querySelector('input[type="text"]').value;
-                    const password = e_fields.querySelector('input[type="password"]').value;
+                    const full_name = document.getElementById('full_name').value;
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
 
-                    const { data, error } = await supabaseClient.auth.signInWithPassword({
-                        email,
-                        password
+                    const { data, error } = await supabaseClient.auth.signUp({
+                        email: email,
+                        password: password,
+                        options: {
+                            data: {
+                                full_name: full_name
+                            }
+                        }
                     });
 
-                    if (error) {
-                        if (error.message === "Email not confirmed") {
-                            alert('Erro: Email não confirmado. Por favor, verifique seu email.');
-                        } else if (error.code === "invalid_credentials") {
-                            alert('Erro: Credenciais de login inválidas.');
-                        }
-                        throw error;
-                    }
+                    if (error) throw error;
 
-                    console.log("Login bem-sucedido:", data);
+                    console.log("Cadastro realizado com sucesso:", data);
+                    alert('Cadastro realizado! Verifique seu email para confirmar.');
 
                 } catch (err) {
-                    console.error("Erro ao fazer login:", err.message);
+                    console.error("Erro ao cadastrar:", err.message);
+                    alert('Erro ao cadastrar: ' + err.message);
                 }
             }
         })
@@ -52,9 +55,9 @@
         jsonToObject({
             tag: 'button',
             id: 'insert',
-            innerhtml: 'Sign Up',
+            innerhtml: 'Sign In',
             onclick: async function () {
-                speedj('js/autenticacao/cadastro.js')
+                speedj('js/autenticacao/login.js')
             }
         }),
         jsonToObject({

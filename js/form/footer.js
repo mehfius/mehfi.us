@@ -4,7 +4,8 @@
         tag: 'button',
         textnode: 'Voltar',
         onclick: async function () {          
-            rota_contents();
+            speedj('js/contents/content.js');
+            document.querySelector('window').remove();
         }
     });
 
@@ -53,11 +54,11 @@
                 });
 
                 if (response.status === 204) {
-   /*                  document.querySelector('header').remove();
-                    document.querySelector('window').remove(); */
-      
- /*                    await speedj('js/contents/content.js'); */
-                    rota_contents();
+ 
+                    document.querySelector('window').remove(); 
+
+                    await speedj('js/contents/content.js'); 
+            
                 } else {
                     alert('Erro ao atualizar o registro');
                 }

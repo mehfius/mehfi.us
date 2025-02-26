@@ -159,55 +159,6 @@
                 } else {
                     console.log('Nenhuma sessão ativa, por favor faça login.');
                     await speedj('js/autenticacao/login.js');
-
-                    const loginButton = document.getElementById('login');
-                    if (loginButton) {
-                        loginButton.onclick = async function () {
-                            try {
-                                const email = e_fields.querySelector('input[type="text"]').value;
-                                const password = e_fields.querySelector('input[type="password"]').value;
-
-                                const { data, error } = await supabaseClient.auth.signInWithPassword({
-                                    email,
-                                    password
-                                });
-
-                                if (error) throw error;
-
-                                console.log("Login bem-sucedido:", data);
-
-                            } catch (err) {
-                                console.error("Erro ao fazer login:", err.message);
-                            }
-                        };
-                    }
-
-                    const cadastrarButton = document.getElementById('cadastrar');
-                    if (cadastrarButton) {
-                        cadastrarButton.onclick = async function () {
-                            try {
-                                const email = e_fields.querySelector('input[type="text"]').value;
-                                const password = e_fields.querySelector('input[type="password"]').value;
-                                await signUpWithEmail(email, password);
-                            } catch (err) {
-                                console.error("Erro ao cadastrar:", err.message);
-                            }
-                        };
-                    }
-
-                    const gitLoginButton = document.getElementById('git_login');
-                    if (gitLoginButton) {
-                        gitLoginButton.onclick = () => {
-                            signInWithGitHub();
-                        };
-                    }
-
-                    const googleLoginButton = document.getElementById('google_login');
-                    if (googleLoginButton) {
-                        googleLoginButton.onclick = () => {
-                            signInWithGoogle();
-                        };
-                    }
                 }
             } catch (err) {
                 console.error('Erro ao verificar estado da autenticação:', err);

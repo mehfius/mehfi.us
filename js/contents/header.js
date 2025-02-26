@@ -11,6 +11,9 @@
     json.tipo = JSON.parse(sessionStorage.getItem('tipo'));
     sessionStorage.removeItem('contents_id');
     e_header.append(tipo());
+
+    const e_buttons = jsonToObject({ tag: 'buttons' }); // Criação do elemento buttons
+
     const e_logout_button = jsonToObject({
         tag: 'button',
         id: 'logout_button',
@@ -29,7 +32,9 @@
         onclick: () => rota_form()
     });
 
-    e_header.append(e_button_videocall, e_button_novo, e_logout_button);
+    // Adicionando os botões dentro do elemento buttons
+    e_buttons.append(e_button_videocall, e_button_novo, e_logout_button);
+    e_header.append(e_buttons); // Adicionando o elemento buttons ao header
 
     if(!document.querySelector('header')){
         document.body.append(e_header);
@@ -42,8 +47,10 @@
         for (const tipo_item of tipos) {
             const e_button = jsonToObject({
                 tag: 'button',
-                class: `fa-solid ${tipo_item.icon}`,
+            /*     class: `fa-solid ${tipo_item.icon}`, */
                 type: 'button',
+/*                 icon_code: tipo_item.icon_code, */
+                textnode: tipo_item.label,
                 onclick: async () => {                   
                     if (JSON.parse(sessionStorage.getItem('tipo')) == tipo_item.id) {
                         sessionStorage.removeItem('tipo');

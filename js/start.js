@@ -6,13 +6,13 @@ sessionStorage.setItem("supabasekey", jkey);
 sessionStorage.setItem("supabaseurl", jurl);
 
   const contents_tipos = [
-      { id: "4", icon: "fa-key", label: "Autenticação" },
-      { id: "3", icon: "fa-toolbox", label: "Configuração" },
-      { id: "2", icon: "fa-file", label: "Arquivo" },
-      { id: "1", icon: "fa-ghost", label: "Sem tipo" },
-      { id: "5", icon: "fa-file-medical", label: "Prescrição" },
-      { id: "6", icon: "fa-file-csv", label: "CSV" },
-      { id: "7", icon: "fa-file-pdf", label: "PDF" }
+      { id: "4", icon_code: "f084", icon: "fa-key", label: "Autenticação" },
+      { id: "3", icon_code: "f552", icon: "fa-toolbox", label: "Configuração" },
+      { id: "2", icon_code: "f15b", icon: "fa-file", label: "Arquivo" },
+      { id: "1", icon_code: "f6e2", icon: "fa-ghost", label: "Sem tipo" },
+      { id: "5", icon_code: "f477", icon: "fa-file-medical", label: "Prescrição" },
+      { id: "6", icon_code: "f6dd", icon: "fa-file-csv", label: "CSV" },
+      { id: "7", icon_code: "f1c1", icon: "fa-file-pdf", label: "PDF" }
   ];
 
   sessionStorage.setItem('contents_tipos', JSON.stringify(contents_tipos));
