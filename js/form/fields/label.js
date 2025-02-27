@@ -1,8 +1,7 @@
 (async function (){ 
 
-  const form = JSON.parse(sessionStorage.contents_form);
-
-  let value = form[0].label || '';
+  const form = JSON.parse(sessionStorage.contents_form || '{}');
+  const value = form.label || '';
 
   let e_div = jsonToObject({ 
       tag: 'div'

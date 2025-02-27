@@ -1,9 +1,8 @@
 (async function (){ 
 
-    const form = JSON.parse(sessionStorage.contents_form);
-    const contents_tipo = JSON.parse(sessionStorage.contents_tipos);
-    
-    let value = form[0].tipo || '';
+    const form = JSON.parse(sessionStorage.contents_form || '{}');
+    const contents_tipo = JSON.parse(sessionStorage.contents_tipos);    
+    const value = form.tipo || '';
 
     let e_div = jsonToObject({
         tag: 'div'

@@ -1,8 +1,8 @@
 (async function () {
     sessionStorage.removeItem('contents_form');
 
-    await speedj('/js/contents/header.js');
-    await speedj('/js/contents/content.css');
+    await speedj('js/contents/header.js');
+    await speedj('js/contents/content.css');
 
     let e_content = document.querySelector('body > content');
 
@@ -86,16 +86,6 @@
 
         const e_menu = jsonToObject({ tag: 'menu' });
 
-        const e_button_deletar = jsonToObject({
-            tag: 'button',
-            textnode: 'Deletar',
-            onclick: () => {
-                if (confirm('Deseja remover este item?')) {
-                    sessionStorage.setItem('contents_id', dataItem['id']);
-                    rota_contents_delete();
-                }
-            }
-        });
 
         const e_button_editar = jsonToObject({
             tag: 'button',
@@ -106,7 +96,7 @@
             }
         });
 
-        e_menu.append(e_button_deletar, e_button_editar);
+        e_menu.append(e_button_editar);
         e_item.append(e_container, e_menu);
         e_content.append(e_item);
     }

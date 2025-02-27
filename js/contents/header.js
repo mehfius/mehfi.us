@@ -29,7 +29,7 @@
     let e_button_novo = jsonToObject({
         tag: 'button',
         textnode: 'Novo',
-        onclick: () => rota_form()
+        onclick: () => speedj('js/form/form.js')
     });
 
     // Adicionando os botões dentro do elemento buttons

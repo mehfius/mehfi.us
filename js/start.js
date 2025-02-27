@@ -250,7 +250,7 @@ function rota_form() { speedj('/js/form/form.js') }
 
 function rota_contents_delete() { speedj('/js/contents/content_delete.js'); }
 
-function rota_salvar() { speedj('/js/form/form_salvar.js') }
+
 function rota_header() { speedj('/js/page/header.js') }
 
 function rota_login() { speedj('/js/autenticacao/login.js') }
