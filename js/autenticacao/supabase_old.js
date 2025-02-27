@@ -86,7 +86,7 @@
                     logout_button.onclick = signOut;
                 }
             } else {
-
+                console.log('google')
                 console.log('Nenhuma sessão ativa, por favor faça login.');
                 await speedj('js/autenticacao/login.js');
                         
@@ -133,7 +133,9 @@
                 }
 
                 const googleLoginButton = document.getElementById('google_login');
+             
                 if (googleLoginButton) {
+                  
                     googleLoginButton.onclick = () => {
                         signInWithGoogle();
                     };
