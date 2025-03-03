@@ -19,6 +19,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
         integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="https://speedj.mehfi.us/src/speedj.js" data-production-domain="mehfi.us"></script>        
     <script src="https://cdn.socket.io/socket.io-2.3.0.js"></script>
     <script src="js/start.js"></script>
     <!--   <script src="js/autenticacao/supabase.js"></script> -->
@@ -117,6 +118,8 @@
                         console.log('Access Token Decodificado:', decoded_token);
                         sessionStorage.setItem('user_name', user_name);
                         sessionStorage.setItem('access_token', access_token);
+
+                        globalThis.access_token = access_token;
                     }
                 }
             } catch (err) {
@@ -156,6 +159,9 @@
                     console.log(`Bem-vindo de volta ${user_name} (${user_email}) via ${provider}`);
                     console.log('Access Token:', access_token);
                     console.log('Access Token Decodificado:', decoded_token);
+
+                    globalThis.access_token = access_token;
+
                     await speedj('js/contents/content.js');
 
                 } else {

@@ -95,6 +95,11 @@ body>content>item>container>a {
     display: none;
 
 }
+body>content>item>files>item>audio {
+
+    zoom: 0.5;
+
+}
 
 body>content>item>container>d {
 

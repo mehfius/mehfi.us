@@ -102,5 +102,82 @@
         }
     });
 
-    document.querySelector('window > footer').append(e_button_back, e_button_save, e_button_delete);
+    let e_button_anexar = jsonToObject({
+        tag: 'button',
+        textnode: 'Anexar',
+        onclick: async function () {
+            const file_input = jsonToObject({
+                tag: 'input',
+                type: 'file',
+                id: 'file_input',
+                style: 'display: none;'
+            });
+            
+            file_input.setAttribute('multiple', true);
+            document.body.appendChild(file_input);
+            file_input.click();
+
+            file_input.onchange = async (event) => {
+                const files = event.target.files;
+                if (files.length > 0) {
+                    const folder = JSON.parse(localStorage.getItem('sb-kgwnnqbpohhldfroogmm-auth-token')).user.id;
+                    const base_url = 'https://kgwnnqbpohhldfroogmm.supabase.co/storage/v1/object/mp3/';
+                    const content_id = sessionStorage.contents_id;
+
+                    try {
+                        let success_count = 0;
+                        
+                        for (const file of files) {
+                            const formData = new FormData();
+                            formData.append('file', file);
+                            
+                            const uuid = crypto.randomUUID();
+                            const file_extension = file.name.split('.').pop();
+                            const new_file_name = `${uuid}.${file_extension}`;
+                            
+                            const url = `${base_url}${folder}/${content_id}/${new_file_name}`;
+                            
+                            const customMetadata = {
+                                content_id: content_id,
+                                user_id: folder
+                            };
+                            
+                            const uploadMetadata = Object.entries(customMetadata)
+                                .map(([key, value]) => `${key} ${btoa(value)}`)
+                                .join(',');
+
+                            const response = await fetch(url, {
+                                method: 'POST',
+                                headers: {
+                                    'Content-Type': file.type,
+                                    'Authorization': `Bearer ${globalThis.access_token}`,
+                                    'Upload-Metadata': uploadMetadata,
+                                },
+                                body: formData
+                            });
+
+                            if (response.ok) {
+                                success_count++;
+                            } else {
+                                throw new Error(`Erro ao anexar arquivo: ${file.name}`);
+                            }
+                        }
+                        
+                        if (success_count === files.length) {
+                            alert(`${success_count} arquivo(s) anexado(s) com sucesso!`);
+                        } else {
+                            alert(`${success_count} de ${files.length} arquivos foram anexados com sucesso.`);
+                        }
+                        
+                    } catch (error) {
+                        console.error('Erro:', error);
+                        alert('Erro ao anexar arquivos');
+                    }
+                }
+                document.body.removeChild(file_input);
+            };
+        }
+    });
+
+    document.querySelector('window > footer').append(e_button_back, e_button_save, e_button_anexar, e_button_delete);
 })();

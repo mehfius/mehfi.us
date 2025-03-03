@@ -12,7 +12,8 @@ sessionStorage.setItem("supabaseurl", jurl);
       { id: "1", icon_code: "f6e2", icon: "fa-ghost", label: "Sem tipo" },
       { id: "5", icon_code: "f477", icon: "fa-file-medical", label: "Prescrição" },
       { id: "6", icon_code: "f6dd", icon: "fa-file-csv", label: "CSV" },
-      { id: "7", icon_code: "f1c1", icon: "fa-file-pdf", label: "PDF" }
+      { id: "7", icon_code: "f1c1", icon: "fa-file-pdf", label: "PDF" },
+      { id: "8", icon_code: "f1c1", icon: "fa-file-audio", label: "Youtube" }      
   ];
 
   sessionStorage.setItem('contents_tipos', JSON.stringify(contents_tipos));
@@ -21,7 +22,7 @@ sessionStorage.setItem("supabaseurl", jurl);
     var storage = JSON.parse(sessionStorage.getItem(key));  
     return storage;    
   }
-  
+  /* 
   const speedj = async function(url){
 
     if (!url.startsWith('https')) {
@@ -82,7 +83,7 @@ sessionStorage.setItem("supabaseurl", jurl);
       }
     });
   }
-
+ */
 const loading_box = async function(label,url){
 
   let loading_box = document.querySelector('loading_box');
