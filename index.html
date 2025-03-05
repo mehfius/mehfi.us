@@ -93,13 +93,12 @@
         }
 
         async function signInWithOAuth(provider) {
-            console.log(window.location.href)
+            alert(window.location.host)
             try {
                 const { data, error } = await supabaseClient.auth.signInWithOAuth({
                     provider,
                     options: {
-                        redirectTo: window.location.href === 'https://mehfi.us' ? 'https://mehfi.us' : 'http://127.0.0.1:3001',
-                        scopes: 'https://www.googleapis.com/auth/drive.metadata.readonly' 
+                        redirectTo: window.location.href === 'mehfi.us' ? 'https://mehfi.us' : 'http://127.0.0.1:3001'
                     }
                 });
              
