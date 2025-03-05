@@ -93,7 +93,7 @@
         }
 
         async function signInWithOAuth(provider) {
-       
+            console.log(window.location.href)
             try {
                 const { data, error } = await supabaseClient.auth.signInWithOAuth({
                     provider,
