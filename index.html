@@ -98,7 +98,7 @@
                 const { data, error } = await supabaseClient.auth.signInWithOAuth({
                     provider,
                     options: {
-                        redirectTo: window.location.href === 'mehfi.us' ? 'https://mehfi.us' : 'http://127.0.0.1:3001'
+                        redirectTo: window.location.host === 'mehfi.us' ? 'https://mehfi.us' : 'http://127.0.0.1:3001'
                     }
                 });
                 alert(JSON.stringify(data))
