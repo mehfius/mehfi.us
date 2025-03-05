@@ -101,7 +101,8 @@
                         redirectTo: window.location.href === 'mehfi.us' ? 'https://mehfi.us' : 'http://127.0.0.1:3001'
                     }
                 });
-             
+                console.log(data);
+                alert('Data')
                 if (error) throw new Error(error.message);
 
                 if (data.session) {
