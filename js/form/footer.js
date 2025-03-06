@@ -24,6 +24,14 @@
                     isValid = false;
                     return;
                 }
+                
+                if (input.id === 'tipo' && !input.value) {
+                    errorTag.innerHTML = 'Campo obrigatório';
+                    errorTag.style.display = 'block';
+                    isValid = false;
+                    return;
+                }
+                
                 if (input.getAttribute('required') === 'true' && input.value.trim() === '') {                
                     errorTag.innerHTML = 'campo vazio';
                     errorTag.style.display = 'block';

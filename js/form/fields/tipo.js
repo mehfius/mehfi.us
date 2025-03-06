@@ -17,11 +17,13 @@
         tag: 'input',
         type: 'hidden',
         id: 'tipo',
-        value: value
+        value: value,
+        required: 'true'
     });
 
     let e_error = jsonToObject({
-        tag: 'error'
+        tag: 'error',
+        style: 'display: none;'
     });
 
     e_div.append(e_label);
@@ -43,6 +45,7 @@
             });
             this.setAttribute('selected', '1');
             e_input.value = tipo.id;
+            e_error.style.display = 'none';
         };
 
         e_div.append(e_button);
@@ -51,5 +54,14 @@
     e_div.append(e_input, e_error);
    
     document.querySelector('window > form').append(e_div);
+
+    e_input.onchange = function() {
+        if (!this.value) {
+            e_error.innerHTML = 'Selecione um tipo';
+            e_error.style.display = 'block';
+        } else {
+            e_error.style.display = 'none';
+        }
+    };
 
 })();

@@ -29,7 +29,11 @@
     let e_button_novo = jsonToObject({
         tag: 'button',
         textnode: 'Novo',
-        onclick: () => speedj('js/form/form.js')
+        onclick: async () => {
+            sessionStorage.removeItem('contents_id'); // Ensure it's a new record
+            sessionStorage.removeItem('contents_form'); // Clear any existing form data
+            await speedj('js/form/form.js');
+        }
     });
 
     // Adicionando os botões dentro do elemento buttons
