@@ -3,21 +3,21 @@
     speedj('js/autenticacao/login.css')
 
     document.body.innerHTML = ''
-    const e_login = jsonToObject({ tag: 'login' });
-    const e_fields = jsonToObject({ tag: 'fields' });
+    const e_login = jte({ tag: 'login' });
+    const e_fields = jte({ tag: 'fields' });
 
     e_fields.append(
-        jsonToObject({ tag: 'label', innerhtml: 'Nome Completo: ' }),
-        jsonToObject({ tag: 'input', type: 'text', id: 'full_name', required: 'true' }),
-        jsonToObject({ tag: 'label', innerhtml: 'Email: ' }),
-        jsonToObject({ tag: 'input', type: 'text', id: 'email' }),
-        jsonToObject({ tag: 'label', innerhtml: 'Senha: ' }),
-        jsonToObject({ tag: 'input', type: 'password', id: 'password' })
+        jte({ tag: 'label', innerhtml: 'Nome Completo: ' }),
+        jte({ tag: 'input', type: 'text', id: 'full_name', required: 'true' }),
+        jte({ tag: 'label', innerhtml: 'Email: ' }),
+        jte({ tag: 'input', type: 'text', id: 'email' }),
+        jte({ tag: 'label', innerhtml: 'Senha: ' }),
+        jte({ tag: 'input', type: 'password', id: 'password' })
     );
 
-    const e_actions = jsonToObject({ tag: 'actions' });
+    const e_actions = jte({ tag: 'actions' });
     e_actions.append(
-        jsonToObject({
+        jte({
             tag: 'button',
             id: 'login',
             innerhtml: 'Send',
@@ -50,9 +50,9 @@
         })
     );
 
-    const e_buttons = jsonToObject({ tag: 'buttons' });
+    const e_buttons = jte({ tag: 'buttons' });
     e_buttons.append(
-        jsonToObject({
+        jte({
             tag: 'button',
             id: 'insert',
             innerhtml: 'Sign In',
@@ -60,7 +60,7 @@
                 speedj('js/autenticacao/login.js')
             }
         }),
-        jsonToObject({
+        jte({
             tag: 'button',
             id: 'git_login',
             innerhtml: 'Git Hub',
@@ -68,7 +68,7 @@
                 signInWithGitHub();
             }
         }),
-        jsonToObject({
+        jte({
             tag: 'button',
             id: 'google_login',
             innerhtml: 'Google',

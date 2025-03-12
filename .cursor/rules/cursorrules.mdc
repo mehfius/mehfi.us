@@ -9,7 +9,7 @@ globs:
 - You can use markdown but dont have to
 /* Sempre utilize snake_case nas criações variavel. Use a função abaixo para quando for criar elementos: */
 
-function jsonToObject(json){
+function jte(json){
 
   var field = document.createElement(json.tag);
         
@@ -64,16 +64,16 @@ createOptCheck(options, value, e);
 
   let value = form.cnpj || ''
 
-  let e_div = jsonToObject({ 
+  let e_div = jte({ 
       tag: 'div'
   });
 
-  let e_label = jsonToObject({
+  let e_label = jte({
       tag: 'label',
       innerhtml: 'CNPJ'
   });
 
-  let e_input = jsonToObject({ 
+  let e_input = jte({ 
       tag: 'input',
       autocomplete: 'off',
       id: 'cnpj',
@@ -83,7 +83,7 @@ createOptCheck(options, value, e);
       value: value
   });
 
-  let e_error = jsonToObject({
+  let e_error = jte({
       tag: 'error'
   });
 

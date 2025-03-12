@@ -2,7 +2,7 @@
     await speedj('/js/contents/header.css');
     sessionStorage.removeItem('contents_form');
 
-    let e_header = jsonToObject({
+    let e_header = jte({
         tag: 'header'
     });
 
@@ -12,21 +12,21 @@
     sessionStorage.removeItem('contents_id');
     e_header.append(tipo());
 
-    const e_buttons = jsonToObject({ tag: 'buttons' }); // Criação do elemento buttons
+    const e_buttons = jte({ tag: 'buttons' }); // Criação do elemento buttons
 
-    const e_logout_button = jsonToObject({
+    const e_logout_button = jte({
         tag: 'button',
         id: 'logout_button',
         textnode: 'Logout',
         onclick: signOut
     });
-    let e_button_videocall = jsonToObject({
+    let e_button_videocall = jte({
         tag: 'button',
         textnode: 'Videocall',
         onclick: () => speedj('js/videocall/index.js')
     });
 
-    let e_button_novo = jsonToObject({
+    let e_button_novo = jte({
         tag: 'button',
         textnode: 'Novo',
         onclick: async () => {
@@ -44,12 +44,12 @@
         document.body.append(e_header);
     }
     function tipo() {
-        const e_element = jsonToObject({ tag: 'tipo' });
+        const e_element = jte({ tag: 'tipo' });
         let tipos = JSON.parse(sessionStorage.getItem('contents_tipos'));
         let tipo_atual = JSON.parse(sessionStorage.getItem('tipo'));
 
         for (const tipo_item of tipos) {
-            const e_button = jsonToObject({
+            const e_button = jte({
                 tag: 'button',
             /*     class: `fa-solid ${tipo_item.icon}`, */
                 type: 'button',

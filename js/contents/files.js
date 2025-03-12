@@ -95,30 +95,30 @@
                                     }
                                 }
 
-                                const file_item = jsonToObject({ tag: 'item' });
+                                const file_item = jte({ tag: 'item' });
                                 
-                                const file_name = jsonToObject({
+                                const file_name = jte({
                                     tag: 'span',
                                     textnode: `Nome: ${file.name}`
                                 });
                                 
-                                const file_date = jsonToObject({
+                                const file_date = jte({
                                     tag: 'span',
                                     textnode: `Criado em: ${moment(file.created_at).format('DD/MM/YYYY HH:mm')}`
                                 });
                                 
-                                const file_size = jsonToObject({
+                                const file_size = jte({
                                     tag: 'span',
                                     textnode: `Tamanho: ${(file.metadata.size / 1024).toFixed(2)} KB`
                                 });
                                 
-                                const file_type = jsonToObject({
+                                const file_type = jte({
                                     tag: 'span',
                                     textnode: `Tipo: ${file.metadata.mimetype}`
                                 });
 
                                 if (file.metadata.mimetype === 'audio/mpeg') {
-                                    const audio_player = jsonToObject({
+                                    const audio_player = jte({
                                         tag: 'audio',
                                         controls: true,
                                         src: signed_url,

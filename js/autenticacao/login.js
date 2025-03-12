@@ -3,19 +3,19 @@
     speedj('js/autenticacao/login.css')
 
     document.body.innerHTML = ''
-    const e_login = jsonToObject({ tag: 'login' });
-    const e_fields = jsonToObject({ tag: 'fields' });
+    const e_login = jte({ tag: 'login' });
+    const e_fields = jte({ tag: 'fields' });
 
     e_fields.append(
-        jsonToObject({ tag: 'label', innerhtml: 'Email: ' }),
-        jsonToObject({ tag: 'input', type: 'text' }),
-        jsonToObject({ tag: 'label', innerhtml: 'Senha: ' }),
-        jsonToObject({ tag: 'input', type: 'password' })
+        jte({ tag: 'label', innerhtml: 'Email: ' }),
+        jte({ tag: 'input', type: 'text' }),
+        jte({ tag: 'label', innerhtml: 'Senha: ' }),
+        jte({ tag: 'input', type: 'password' })
     );
 
-    const e_actions = jsonToObject({ tag: 'actions' });
+    const e_actions = jte({ tag: 'actions' });
     e_actions.append(
-        jsonToObject({
+        jte({
             tag: 'button',
             id: 'login',
             innerhtml: 'Send',
@@ -47,9 +47,9 @@
         })
     );
 
-    const e_buttons = jsonToObject({ tag: 'buttons' });
+    const e_buttons = jte({ tag: 'buttons' });
     e_buttons.append(
-        jsonToObject({
+        jte({
             tag: 'button',
             id: 'insert',
             innerhtml: 'Sign Up',
@@ -57,7 +57,7 @@
                 speedj('js/autenticacao/cadastro.js')
             }
         }),
-        jsonToObject({
+        jte({
             tag: 'button',
             id: 'git_login',
             innerhtml: 'Git Hub',
@@ -65,7 +65,7 @@
                 signInWithGitHub();
             }
         }),
-        jsonToObject({
+        jte({
             tag: 'button',
             id: 'google_login',
             innerhtml: 'Google',

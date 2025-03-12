@@ -1,19 +1,19 @@
 (async function () {
 
-    let e_button_back = jsonToObject({
+    let e_button_back = jte({
         tag: 'button',
         textnode: 'Voltar',
         onclick: async function () {          
             speedj('js/contents/content.js');
-            document.querySelector('window').remove();
+            navdialog.close_dialog(document.querySelector('dialog'));
         }
     });
 
-    let e_button_save = jsonToObject({
+    let e_button_save = jte({
         tag: 'button',
         textnode: 'Salvar',
         onclick: async function () {
-            const inputs = document.querySelectorAll('window > form > div > input, window > form > div > select, window > form > div > textarea')
+            const inputs = document.querySelectorAll('dialog > content > form > div > input, dialog > content > form > div > select, dialog > content > form > div > textarea')
             const data = {};
             let isValid = true;
       
@@ -64,7 +64,7 @@
                 });
 
                 if (response.status === 204 || response.status === 201) {
-                    document.querySelector('window').remove(); 
+                    navdialog.close_dialog(document.querySelector('dialog')); 
                     await speedj('js/contents/content.js'); 
                 } else {
                     alert('Erro ao salvar o registro');
@@ -77,7 +77,7 @@
         }
     });
 
-    let e_button_delete = jsonToObject({
+    let e_button_delete = jte({
         tag: 'button',
         textnode: 'Deletar',
         onclick: async function () {
@@ -97,7 +97,7 @@
                 });
 
                 if (response.status === 204) {
-                    document.querySelector('window').remove();
+                    navdialog.close_dialog(document.querySelector('dialog'));
                     await speedj('js/contents/content.js');
                 } else {
                     alert('Erro ao deletar o registro');
@@ -107,14 +107,15 @@
                 console.error('Erro:', error);
                 alert('Ocorreu um erro ao tentar deletar o registro');
             }
+            navdialog.close_dialog(document.querySelector('dialog'));
         }
     });
 
-    let e_button_anexar = jsonToObject({
+    let e_button_anexar = jte({
         tag: 'button',
         textnode: 'Anexar',
         onclick: async function () {
-            const file_input = jsonToObject({
+            const file_input = jte({
                 tag: 'input',
                 type: 'file',
                 id: 'file_input',
@@ -187,5 +188,11 @@
         }
     });
 
-    document.querySelector('window > footer').append(e_button_back, e_button_save, e_button_anexar, e_button_delete);
+    const formElement = document.querySelector('dialog > content > form');
+    if (formElement) {
+        // Remove the buttons from being appended to the form
+        // formElement.append(e_button_back, e_button_save, e_button_delete);
+    } else {
+        console.error('Form element not found');
+    }
 })();

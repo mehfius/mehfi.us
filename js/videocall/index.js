@@ -6,7 +6,7 @@
         existing_videocall.remove();
     }
 
-    let videocall = jsonToObject({
+    let videocall = jte({
         tag: 'videocall'
     });
 

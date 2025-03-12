@@ -9,7 +9,7 @@
     if (e_content) {
         e_content.innerHTML = '';
     } else {
-        e_content = jsonToObject({
+        e_content = jte({
             tag: 'content'
         });
     }
@@ -24,34 +24,32 @@
     e_content.innerHTML = '';
 
     for (const dataItem of data) {
-        const e_item = jsonToObject({ tag: 'item', id: dataItem['id'] });
-        const e_container = jsonToObject({ tag: 'container' });
+        const e_item = jte({ tag: 'item', id: dataItem['id'] });
+        const e_container = jte({ tag: 'container' });
 
         // Criar elementos separadamente
-        let e_label = null;
+        let e_label = jte({
+            tag: 'label',
+            textnode: dataItem['label'] || ''
+        });
         let e_created_at = null;
         let e_description = null;
 
         for (const [key, value] of Object.entries(dataItem)) {
-            if (key == 'label') {
-                e_label = jsonToObject({
-                    tag: key,
-                    textnode: value
-                });
-            } else if (key == 'created_at') {
+            if (key == 'created_at') {
                 moment.locale('pt-br');
-                e_created_at = jsonToObject({
+                e_created_at = jte({
                     tag: key,
                     textnode: moment(value, 'YYYY-MM-DD HH24:mm').utc(false).fromNow()
                 });
             } else if (key == 'description') {
                 if (dataItem['tipo'] == 4) {
-                    e_description = jsonToObject({ tag: key });
+                    e_description = jte({ tag: key });
                     const linhas = value.split(/\n\s*?(?=\n|$)/);
 
                     linhas.forEach(secao => {
                         const linhas_da_secao = secao.split('\n');
-                        const e_button = jsonToObject({
+                        const e_button = jte({
                             tag: 'button',
                             textnode: linhas_da_secao[1],
                             type: 'button',
@@ -63,15 +61,15 @@
                         e_description.append(e_button);
                     });
                 } else if (dataItem['tipo'] == 6) {
-                    e_description = jsonToObject({ tag: key });
-                    const e_button = jsonToObject({
+                    e_description = jte({ tag: key });
+                    const e_button = jte({
                         tag: 'button',
                         textnode: 'Download CSV',
                         onclick: () => fetchCSVAndPrint(value)
                     });
                     e_description.append(e_button);
                 } else {
-                    e_description = jsonToObject({
+                    e_description = jte({
                         tag: key,
                         textnode: value
                     });
@@ -83,11 +81,11 @@
         if (e_created_at) e_container.append(e_created_at);
         if (e_description) e_container.append(e_description);
 
-        const e_files = jsonToObject({ tag: 'files' });
+        const e_files = jte({ tag: 'files' });
 
-        const e_menu = jsonToObject({ tag: 'menu' });
+        const e_menu = jte({ tag: 'menu' });
 
-        const e_button_editar = jsonToObject({
+        const e_button_editar = jte({
             tag: 'button',
             textnode: 'Editar',
             onclick: async () => {
@@ -96,7 +94,7 @@
             }
         });
 
-        const e_input_file = jsonToObject({
+        const e_input_file = jte({
             tag: 'input',
             type: 'file',
             id: 'file_input_' + dataItem['id'],
@@ -106,7 +104,7 @@
         // Adicionar botão processar se o tipo for 8
         if (dataItem['tipo'] == 8) {
             let user_id = JSON.parse(localStorage.getItem('sb-kgwnnqbpohhldfroogmm-auth-token')).user.id;
-            const e_button_processar = jsonToObject({
+            const e_button_processar = jte({
                 tag: 'button',
                 textnode: 'Processar',
                 onclick: async () => {
