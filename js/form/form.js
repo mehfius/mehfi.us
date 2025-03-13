@@ -143,9 +143,9 @@
     await speedj('js/form/header.js');
 
     const fields = [
-        'tipo',
         'label',
-        'description'
+        'description',
+        'tipo'
     ];
 
     for (const field of fields) {

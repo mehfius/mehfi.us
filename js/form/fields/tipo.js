@@ -26,7 +26,7 @@
         style: 'display: none;'
     });
 
-    e_div.append(e_label);
+ /*    e_div.append(e_label); */
 
     contents_tipo.forEach(tipo => {
         let e_button = jte({
