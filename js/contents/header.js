@@ -18,7 +18,7 @@
         tag: 'button',
         id: 'logout_button',
         textnode: 'Logout',
-        onclick: signOut
+        onclick: authSignAuth
     });
     let e_button_videocall = jte({
         tag: 'button',
