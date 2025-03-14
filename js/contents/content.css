@@ -95,6 +95,7 @@ body>content>item>container>a {
     display: none;
 
 }
+
 body>content>item>files>item>audio {
 
     zoom: 0.5;
@@ -116,13 +117,15 @@ body>content>item>container>shared {
 body>content>item>container>description {
 
     float: left;
-    width: calc(100% - 40px);
+    width: calc(100% - 80px);
     line-height: 1.5;
-    border-top: 1px solid #828282;
     padding: 20px;
     font-size: 10pt;
     white-space: pre-wrap;
     overflow-wrap: break-word;
+    font-family: consolas;
+    background-color: #00000020;
+    margin: 20px
 
 }
 
