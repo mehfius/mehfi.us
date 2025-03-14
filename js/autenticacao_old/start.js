@@ -1,23 +1,3 @@
-const jkey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtnd25ucWJwb2hobGRmcm9vZ21tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI4NTc2MjgsImV4cCI6MjAyODQzMzYyOH0.Mrxll-WATVuV0NXB36Tf2LJBf5KDZRsXSqFhLmTVbME"
-const jurl = "https://kgwnnqbpohhldfroogmm.supabase.co/"
-const json = { "key": jkey, "url": jurl }
-
-sessionStorage.setItem("supabasekey", jkey);
-sessionStorage.setItem("supabaseurl", jurl);
-
-const contents_tipos = [
-    { id: "4", icon_code: "f084", icon: "fa-key", label: "Autenticação" },
-    { id: "3", icon_code: "f552", icon: "fa-toolbox", label: "Configuração" },
-    { id: "2", icon_code: "f15b", icon: "fa-file", label: "Arquivo" },
-    { id: "1", icon_code: "f6e2", icon: "fa-ghost", label: "Sem tipo" },
-    { id: "5", icon_code: "f477", icon: "fa-file-medical", label: "Prescrição" },
-    { id: "6", icon_code: "f6dd", icon: "fa-file-csv", label: "CSV" },
-    { id: "7", icon_code: "f1c1", icon: "fa-file-pdf", label: "PDF" },
-    { id: "8", icon_code: "f1c1", icon: "fa-file-audio", label: "Youtube" }
-];
-
-sessionStorage.setItem('contents_tipos', JSON.stringify(contents_tipos));
-
 function get_session_storage(key) {
     var storage = JSON.parse(sessionStorage.getItem(key));
     return storage;
@@ -74,50 +54,6 @@ const load_html = async function (url, e) {
 
 }
 
-const supabase_fetch_rls = function (data, filtro = null, valor = null) {
-
-    const myHeaders = new Headers();
-    myHeaders.append("Apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtnd25ucWJwb2hobGRmcm9vZ21tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI4NTc2MjgsImV4cCI6MjAyODQzMzYyOH0.Mrxll-WATVuV0NXB36Tf2LJBf5KDZRsXSqFhLmTVbME");
-    myHeaders.append("Content-Type", "application/json");
-
-    const auth_token = localStorage.getItem('sb-kgwnnqbpohhldfroogmm-auth-token');
-
-    if (auth_token) {
-        try {
-            const token_json = JSON.parse(auth_token);
-
-            if (token_json && token_json.access_token) {
-                myHeaders.append("Authorization", `Bearer ${token_json.access_token}`);
-            }
-        } catch (error) {
-            console.error('Erro ao parsear token:', error);
-        }
-    }
-
-    let url = "https://kgwnnqbpohhldfroogmm.supabase.co/rest/v1/" + data.name;
-
-    if (filtro && valor) {
-        url += `?${filtro}=eq.${valor}`;
-    }
-
-    if (url.includes('?')) {
-        url += '&order=created_at.desc';
-    } else {
-        url += '?order=created_at.desc';
-    }
-
-    const requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-        redirect: "follow"
-    };
-
-    return fetch(url, requestOptions)
-        .then((response) => response.json())
-        .catch((error) => console.error(error));
-
-}
-
 const supabase_fetch = function (data) {
 
     const myHeaders = new Headers();
@@ -138,35 +74,6 @@ const supabase_fetch = function (data) {
         .catch((error) => console.error(error));
 
 }
-
-const supabase_fetch_doctor = function (data) {
-
-    const myHeaders = new Headers();
-    myHeaders.append("Apikey", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZmbGh1cXF6am1na2Roamd4em5pIiwicm9sZSI6ImFub24iLCJpYXQiOjE2NjE5MDE1NzIsImV4cCI6MTk3NzQ3NzU3Mn0.h8KOM1CCXPY80ImmmsrLmGp0Wib0z8C80KNFFGjzcn8");
-    myHeaders.append("Content-Type", "application/json");
-
-    const raw = JSON.stringify({ data });
-
-    const requestOptions = {
-        method: "POST",
-        headers: myHeaders,
-        body: raw,
-        redirect: "follow"
-    };
-
-    return fetch("https://vflhuqqzjmgkdhjgxzni.supabase.co/rest/v1/rpc/" + data.name, requestOptions)
-        .then((response) => response.json())
-        .catch((error) => console.error(error));
-
-}
-
-/* function rota_contents() { speedj('/js/contents/content.js'); } */
-/* function rota_formlogin() { speedj('/js/autenticacao/form_login.js') }
-function rota_form() { speedj('/js/form/form.js') }
-function rota_contents_delete() { speedj('/js/contents/content_delete.js'); }
-function rota_header() { speedj('/js/page/header.js') }
-function rota_login() { speedj('/js/autenticacao/login.js') }
-function include_contents_csv() { speedj('/js/contents/content_csv.js') } */
 
 var getUserMedia
 var myStream

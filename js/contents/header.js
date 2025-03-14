@@ -10,7 +10,7 @@
     json.name = 'content';
     json.tipo = JSON.parse(sessionStorage.getItem('tipo'));
     sessionStorage.removeItem('contents_id');
-    e_header.append(tipo());
+    e_header.append(await tipo());
 
     const e_buttons = jte({ tag: 'buttons' }); // Criação do elemento buttons
 
@@ -43,17 +43,24 @@
     if(!document.querySelector('header')){
         document.body.append(e_header);
     }
-    function tipo() {
+    async function tipo() {
         const e_element = jte({ tag: 'tipo' });
-        let tipos = JSON.parse(sessionStorage.getItem('contents_tipos'));
+
+        // Wait for categories to be loaded
+        if (!globalThis.category) {
+            await new Promise(resolve => {
+                window.addEventListener('categories_loaded', () => {
+                    resolve();
+                });
+            });
+        }
+
+        let tipos = globalThis.category || [];
         let tipo_atual = JSON.parse(sessionStorage.getItem('tipo'));
 
         for (const tipo_item of tipos) {
             const e_button = jte({
                 tag: 'button',
-            /*     class: `fa-solid ${tipo_item.icon}`, */
-                type: 'button',
-/*                 icon_code: tipo_item.icon_code, */
                 textnode: tipo_item.label,
                 onclick: async () => {                   
                     if (JSON.parse(sessionStorage.getItem('tipo')) == tipo_item.id) {

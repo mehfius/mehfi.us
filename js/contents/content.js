@@ -1,4 +1,4 @@
-(async function () {
+async function init() {
     sessionStorage.removeItem('contents_form');
 
     await speedj('js/contents/header.js');
@@ -18,8 +18,28 @@
     json.name = 'content';
     json.tipo = JSON.parse(sessionStorage.getItem('tipo'));
     sessionStorage.removeItem('contents_id');
+    const auth_token = globalThis.auth.ACCESS_TOKEN;
 
-    const data = await supabase_fetch_rls(json, 'tipo', json.tipo);
+    const myHeaders = new Headers();
+    myHeaders.append("Apikey", globalThis.auth.SUPABASE_KEY);
+    myHeaders.append("Content-Type", "application/json");
+
+    if (auth_token) {
+        try {       
+            myHeaders.append("Authorization", `Bearer ${auth_token}`);    
+        } catch (error) {
+            console.error('Erro ao parsear token:', error);
+        }
+    }
+
+    let url = `${globalThis.auth.SUPABASE_URL}/rest/v1/${json.name}?tipo=eq.${json.tipo}&order=created_at.desc`;
+
+    const data = await fetch(url, {
+        method: "GET",
+        headers: myHeaders,
+        redirect: "follow"
+    }).then(response => response.json())
+      .catch(error => console.error(error));
 
     e_content.innerHTML = '';
 
@@ -162,6 +182,7 @@
         e_content.append(e_item);
     }
     document.body.append(e_content);
-    await speedj('js/contents/files.js');
+    /* await speedj('js/contents/files.js'); */
+}
 
-})();
+init();

@@ -16,43 +16,72 @@
     <meta property="og:image" content="" />
     <meta name="description" content="" />
     <link rel="shortcut icon" href="favicon.svg" />
-    <link rel="stylesheet" href="http://localhost:3006/ux/ux.css">
- <!--    <link rel="stylesheet" href="https://ux.mehfi.us/ux.css"> -->
 
-    <script src="https://speedj.mehfi.us/src/speedj.js" data-production-domain="mehfi.us"></script>     
-
-    <script src="js/start.js"></script>
+    <script src="https://speedj.mehfi.us/src/speedj.js" data-production-domain="mehfi.us"></script>
     <script src="https://momentjs.com/downloads/moment-with-locales.min.js"></script>
     <script src="https://jte.mehfi.us/src/jte.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 
- <!--    <script src="http://localhost:3006/navdialog/src/navdialog.js"></script>   -->  
-    <script src="https://navdialog.mehfi.us/src/navdialog.js"></script>
-<!--     <script src="http://localhost:3006/supauth/supauth.js"></script> -->
-    <script src="https://supauth.mehfi.us/supauth.js"></script>    
     <style>
         :root {
             --input-background: #3c3939;
             --input-background-container: #534d46;
         }
-
     </style>
 
 </head>
 
 <body>
     <script>
-
+        globalThis.category = ''
         globalThis.auth = {}
         globalThis.auth.SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtnd25ucWJwb2hobGRmcm9vZ21tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI4NTc2MjgsImV4cCI6MjAyODQzMzYyOH0.Mrxll-WATVuV0NXB36Tf2LJBf5KDZRsXSqFhLmTVbME";
         globalThis.auth.SUPABASE_URL = "https://kgwnnqbpohhldfroogmm.supabase.co/";
         globalThis.auth.URL_HOST_PRODUCTION = "mehfi.us";
         globalThis.auth.URL_REDIRECT_PRODUCTION = "https://mehfi.us";
-        globalThis.auth.URL_REDIRECT_DEV = "http://localhost:3001";       
+        globalThis.auth.URL_REDIRECT_DEV = "http://localhost:3001";
 
-        supauth(async function(session_data) {
-            await speedj('js/contents/content.js');// Add your success logic here
-        });
+        (async function () {
+
+            const headers = new Headers();
+            headers.append("Apikey", globalThis.auth.SUPABASE_KEY);
+            headers.append("Content-Type", "application/json");
+
+            const url = `${globalThis.auth.SUPABASE_URL}/rest/v1/category?order=created_at.desc`;
+
+            fetch(url, {
+                method: "GET",
+                headers: headers,
+                redirect: "follow"
+            })
+            .then(response => response.json())
+            .then(categories => {
+                globalThis.category = categories;
+                window.dispatchEvent(new Event('categories_loaded'));
+            })
+            .catch(error => console.error('Error:', error));
+
+            if (window.location.host === globalThis.auth.URL_HOST_PRODUCTION) {
+
+                await speedj('https://ux.mehfi.us/ux.css');
+                await speedj('https://navdialog.mehfi.us/src/navdialog.js');
+                await speedj('https://supauth.mehfi.us/supauth.js');
+
+            } else {
+
+                await speedj('http://localhost:3006/ux/ux.css');
+                await speedj('http://localhost:3006/supauth/supauth.js');
+                await speedj('http://localhost:3006/navdialog/src/navdialog.js');
+
+            }
+
+            supauth(async function (session_data) {  
+                globalThis.auth.ACCESS_TOKEN = session_data.access_token;
+                await speedj('js/contents/content.js');
+            });
+
+        })();
+
 
     </script>
 </body>

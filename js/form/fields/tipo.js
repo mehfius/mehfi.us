@@ -1,7 +1,7 @@
 (async function (){ 
 
     const form = JSON.parse(sessionStorage.contents_form || '{}');
-    const contents_tipo = JSON.parse(sessionStorage.contents_tipos);    
+    const contents_tipo = globalThis.category;    
     const value = form.tipo || '';
 
     let e_div = jte({
@@ -31,7 +31,6 @@
     contents_tipo.forEach(tipo => {
         let e_button = jte({
             tag: 'button',
-            class: `fa-solid ${tipo.icon}`,
             type: 'button'
         });
 

@@ -34,7 +34,15 @@ const fetchCSVAndPrint = function (url) {
                 json.name = 'users_insert'
                 json.data = objects
 
-                const status = supabase_fetch_doctor(json);
+                const status = await fetch(`${globalThis.auth.SUPABASE_URL}/rest/v1/users_insert`, {
+                    method: 'POST',
+                    headers: {
+                        'Apikey': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imtnd25ucWJpb2hobGRmcm9vZ21tIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTI4NTc2MjgsImV4cCI6MjAyODQzMzYyOH0.Mrxll-WATVuV0NXB36Tf2LJBf5KDZRsXSqFhLmTVbME',
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${globalThis.auth.ACCESS_TOKEN}`
+                    },
+                    body: JSON.stringify(json.data)
+                });
 
         })
         .catch(error => console.error('Ocorreu um erro:', error));

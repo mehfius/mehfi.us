@@ -130,7 +130,7 @@
                 const files = event.target.files;
                 if (files.length > 0) {
                     const folder = JSON.parse(localStorage.getItem('sb-kgwnnqbpohhldfroogmm-auth-token')).user.id;
-                    const base_url = 'https://kgwnnqbpohhldfroogmm.supabase.co/storage/v1/object/mp3/';
+                    const base_url = `${globalThis.auth.SUPABASE_URL}/storage/v1/object/mp3/`;
                     const content_id = sessionStorage.contents_id;
 
                     try {

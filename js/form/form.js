@@ -12,13 +12,13 @@
     } else {
         // Existing record: fetch data from the server
         console.log(`Fetching data for record ID: ${sessionStorage.contents_id}`);
-        rawResponse = await fetch(`https://kgwnnqbpohhldfroogmm.supabase.co/rest/v1/content?id=eq.${sessionStorage.contents_id}`, {
+        rawResponse = await fetch(`${globalThis.auth.SUPABASE_URL}/rest/v1/content?id=eq.${sessionStorage.contents_id}`, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 'Apikey': sessionStorage.supabasekey,
-                'Authorization': `Bearer ${JSON.parse(localStorage.getItem('sb-kgwnnqbpohhldfroogmm-auth-token')).access_token}`
+                'Authorization': `Bearer ${globalThis.auth.ACCESS_TOKEN}`
             },
         });
 
@@ -75,8 +75,8 @@
 
             try {
                 const url = sessionStorage.contents_id 
-                    ? `https://kgwnnqbpohhldfroogmm.supabase.co/rest/v1/content?id=eq.${sessionStorage.contents_id}`
-                    : 'https://kgwnnqbpohhldfroogmm.supabase.co/rest/v1/content';
+                    ? `${globalThis.auth.SUPABASE_URL}/rest/v1/content?id=eq.${sessionStorage.contents_id}`
+                    : `${globalThis.auth.SUPABASE_URL}/rest/v1/content`;
 
                 const method = sessionStorage.contents_id ? 'PATCH' : 'POST';
 
@@ -86,7 +86,7 @@
                         'Accept': 'application/json', 
                         'Content-Type': 'application/json', 
                         'Apikey': sessionStorage.supabasekey,
-                        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('sb-kgwnnqbpohhldfroogmm-auth-token')).access_token}`
+                        'Authorization': `Bearer ${globalThis.auth.ACCESS_TOKEN}`
                     },
                     body: JSON.stringify({ ...data })
                 });
@@ -107,7 +107,7 @@
             if (!confirm('Tem certeza que deseja deletar este registro?')) return;
 
             try {
-                const url = `https://kgwnnqbpohhldfroogmm.supabase.co/rest/v1/content?id=eq.${sessionStorage.contents_id}`;
+                const url = `${globalThis.auth.SUPABASE_URL}/rest/v1/content?id=eq.${sessionStorage.contents_id}`;
 
                 const response = await fetch(url, {
                     method: 'DELETE',
@@ -115,7 +115,7 @@
                         'Accept': 'application/json', 
                         'Content-Type': 'application/json', 
                         'Apikey': sessionStorage.supabasekey,
-                        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('sb-kgwnnqbpohhldfroogmm-auth-token')).access_token}`
+                        'Authorization': `Bearer ${globalThis.auth.ACCESS_TOKEN}`
                     }
                 });
 
