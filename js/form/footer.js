@@ -58,7 +58,7 @@
                         'Accept': 'application/json', 
                         'Content-Type': 'application/json', 
                         'Apikey': globalThis.auth.SUPABASE_KEY,
-                        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('sb-kgwnnqbpohhldfroogmm-auth-token')).access_token}`
+                        'Authorization': `Bearer ${globalThis.auth.ACCESS_TOKEN}`
                     },
                     body: JSON.stringify({ ...data })
                 });
@@ -92,7 +92,7 @@
                         'Accept': 'application/json', 
                         'Content-Type': 'application/json', 
                         'Apikey': globalThis.auth.SUPABASE_KEY,
-                        'Authorization': `Bearer ${JSON.parse(localStorage.getItem('sb-kgwnnqbpohhldfroogmm-auth-token')).access_token}`
+                        'Authorization': `Bearer ${globalThis.auth.ACCESS_TOKEN}`
                     }
                 });
 

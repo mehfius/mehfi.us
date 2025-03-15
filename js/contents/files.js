@@ -10,7 +10,7 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + globalThis.access_token
+                'Authorization': 'Bearer ' + globalThis.auth.ACCESS_TOKEN
             },
             body: JSON.stringify({
                 prefix: `${user_id}`,
@@ -44,7 +44,7 @@
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json',
-                            'Authorization': 'Bearer ' + globalThis.access_token
+                            'Authorization': 'Bearer ' + globalThis.auth.ACCESS_TOKEN
                         },
                         body: JSON.stringify({
                             prefix: `${user_id}/${id}`,
@@ -73,7 +73,7 @@
                                     method: 'POST',
                                     headers: {
                                         'Content-Type': 'application/json',
-                                        'Authorization': 'Bearer ' + globalThis.access_token
+                                        'Authorization': 'Bearer ' + globalThis.auth.ACCESS_TOKEN
                                     },
                                     body: JSON.stringify({
                                         expiresIn: 3600,
