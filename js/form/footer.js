@@ -57,7 +57,7 @@
                     headers: { 
                         'Accept': 'application/json', 
                         'Content-Type': 'application/json', 
-                        'Apikey': sessionStorage.supabasekey,
+                        'Apikey': globalThis.auth.SUPABASE_KEY,
                         'Authorization': `Bearer ${JSON.parse(localStorage.getItem('sb-kgwnnqbpohhldfroogmm-auth-token')).access_token}`
                     },
                     body: JSON.stringify({ ...data })
@@ -91,7 +91,7 @@
                     headers: { 
                         'Accept': 'application/json', 
                         'Content-Type': 'application/json', 
-                        'Apikey': sessionStorage.supabasekey,
+                        'Apikey': globalThis.auth.SUPABASE_KEY,
                         'Authorization': `Bearer ${JSON.parse(localStorage.getItem('sb-kgwnnqbpohhldfroogmm-auth-token')).access_token}`
                     }
                 });
