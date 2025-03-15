@@ -22,7 +22,7 @@ body > header > buttons > button {
     box-shadow: 0px 0px 2px 0px #000;
 }
 
-body > header > tipo > button {
+body > header > category > button {
     padding: 8px 16px;
     border-radius: 5px;
     cursor: pointer;
@@ -36,12 +36,10 @@ body > header > tipo > button {
     margin-bottom: 10px;
 }
 
-body > header > tipo > button[selected="1"]{
+body > header > category > button[selected="1"]{
     background-color:#534d46;
 }
 
-body > header > tipo {
-
+body > header > category {
     float: left;
-
 }

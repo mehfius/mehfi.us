@@ -145,7 +145,7 @@
     const fields = [
         'label',
         'description',
-        'tipo'
+        'category'
     ];
 
     for (const field of fields) {

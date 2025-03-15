@@ -8,9 +8,9 @@
 
     var json = {};
     json.name = 'content';
-    json.tipo = JSON.parse(sessionStorage.getItem('tipo'));
+    json.tipo = JSON.parse(sessionStorage.getItem('category'));
     sessionStorage.removeItem('contents_id');
-    e_header.append(await tipo());
+    e_header.append(await category());
 
     const e_buttons = jte({ tag: 'buttons' }); // Criação do elemento buttons
 
@@ -43,8 +43,8 @@
     if(!document.querySelector('header')){
         document.body.append(e_header);
     }
-    async function tipo() {
-        const e_element = jte({ tag: 'tipo' });
+    async function category() {
+        const e_element = jte({ tag: 'category' });
 
         // Wait for categories to be loaded
         if (!globalThis.category) {
@@ -55,27 +55,27 @@
             });
         }
 
-        let tipos = globalThis.category || [];
-        let tipo_atual = JSON.parse(sessionStorage.getItem('tipo'));
+        let categories = globalThis.category || [];
+        let current_category = JSON.parse(sessionStorage.getItem('category'));
 
-        for (const tipo_item of tipos) {
+        for (const category_item of categories) {
             const e_button = jte({
                 tag: 'button',
-                textnode: tipo_item.label,
+                textnode: category_item.label,
                 onclick: async () => {                   
-                    if (JSON.parse(sessionStorage.getItem('tipo')) == tipo_item.id) {
-                        sessionStorage.removeItem('tipo');
+                    if (JSON.parse(sessionStorage.getItem('category')) == category_item.id) {
+                        sessionStorage.removeItem('category');
                         e_button.removeAttribute('selected');              
                     } else {
-                        document.querySelectorAll('body > header > tipo > button').forEach(button => button.removeAttribute('selected'));
+                        document.querySelectorAll('body > header > category > button').forEach(button => button.removeAttribute('selected'));
                         e_button.setAttribute('selected', '1');
-                        sessionStorage.setItem('tipo', tipo_item.id);
+                        sessionStorage.setItem('category', category_item.id);
                     }
                     await speedj('js/contents/content.js');
                 }
             });
 
-            if (tipo_atual == tipo_item.id) {
+            if (current_category == category_item.id) {
                 e_button.setAttribute('selected', '1');
             }
 

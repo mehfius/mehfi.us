@@ -1,8 +1,8 @@
 (async function (){ 
 
     const form = JSON.parse(sessionStorage.contents_form || '{}');
-    const contents_tipo = globalThis.category;    
-    const value = form.tipo || '';
+    const contents_category = globalThis.category;    
+    const value = form.category || '';
 
     let e_div = jte({
         tag: 'div'
@@ -10,13 +10,13 @@
 
     let e_label = jte({
         tag: 'label',
-        innerhtml: 'Tipo'
+        innerhtml: 'Category'
     });
 
     let e_input = jte({ 
         tag: 'input',
         type: 'hidden',
-        id: 'tipo',
+        id: 'category',
         value: value,
         required: 'true'
     });
@@ -28,13 +28,14 @@
 
  /*    e_div.append(e_label); */
 
-    contents_tipo.forEach(tipo => {
+    contents_category.forEach(category => {
         let e_button = jte({
             tag: 'button',
-            type: 'button'
+            type: 'button',
+            class: 'category-'+category.slug        
         });
 
-        if(value == tipo.id) {
+        if(value == category.id) {
             e_button.setAttribute('selected', '1');
         }
 
@@ -44,7 +45,7 @@
             });
             
             this.setAttribute('selected', '1');
-            e_input.value = tipo.id;
+            e_input.value = category.id;
             e_error.style.display = 'none';
         };
 
@@ -57,7 +58,7 @@
 
     e_input.onchange = function() {
         if (!this.value) {
-            e_error.innerHTML = 'Selecione um tipo';
+            e_error.innerHTML = 'Select a category';
             e_error.style.display = 'block';
         } else {
             e_error.style.display = 'none';

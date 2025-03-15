@@ -16,7 +16,7 @@ async function init() {
 
     var json = {};
     json.name = 'content';
-    json.tipo = JSON.parse(sessionStorage.getItem('tipo'));
+    json.category = JSON.parse(sessionStorage.getItem('category'));
     sessionStorage.removeItem('contents_id');
     const auth_token = globalThis.auth.ACCESS_TOKEN;
 
@@ -32,7 +32,7 @@ async function init() {
         }
     }
 
-    let url = `${globalThis.auth.SUPABASE_URL}/rest/v1/${json.name}?category=eq.${json.tipo}&order=created_at.desc`;
+    let url = `${globalThis.auth.SUPABASE_URL}/rest/v1/${json.name}?category=eq.${json.category}&order=created_at.desc`;
 
     const data = await fetch(url, {
         method: "GET",
@@ -63,7 +63,7 @@ async function init() {
                     textnode: moment(value, 'YYYY-MM-DD HH24:mm').utc(false).fromNow()
                 });
             } else if (key == 'description') {
-                if (dataItem['tipo'] == 4) {
+                if (dataItem['category'] == 4) {
                     e_description = jte({ tag: key });
                     const linhas = value.split(/\n\s*?(?=\n|$)/);
 
@@ -80,7 +80,7 @@ async function init() {
                         });
                         e_description.append(e_button);
                     });
-                } else if (dataItem['tipo'] == 6) {
+                } else if (dataItem['category'] == 6) {
                     e_description = jte({ tag: key });
                     const e_button = jte({
                         tag: 'button',
@@ -122,7 +122,7 @@ async function init() {
         });
 
         // Adicionar botão processar se o tipo for 8
-        if (dataItem['tipo'] == 8) {
+        if (dataItem['category'] == 8) {
             let user_id = JSON.parse(localStorage.getItem('sb-kgwnnqbpohhldfroogmm-auth-token')).user.id;
             const e_button_processar = jte({
                 tag: 'button',
