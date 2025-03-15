@@ -32,7 +32,7 @@ async function init() {
         }
     }
 
-    let url = `${globalThis.auth.SUPABASE_URL}/rest/v1/${json.name}?tipo=eq.${json.tipo}&order=created_at.desc`;
+    let url = `${globalThis.auth.SUPABASE_URL}/rest/v1/${json.name}?category=eq.${json.tipo}&order=created_at.desc`;
 
     const data = await fetch(url, {
         method: "GET",
