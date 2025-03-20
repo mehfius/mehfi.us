@@ -25,7 +25,10 @@
     <style>
         :root {
             --input-background: #3c3939;
-            --input-background-container: #534d46;
+            --input-background-container: transparent;
+            --background:#181717;
+            --container-color-label:#888;
+            --container-color-item:#888;
         }
     </style>
 
@@ -40,7 +43,7 @@
         globalThis.auth.URL_HOST_PRODUCTION = "mehfi.us";
         globalThis.auth.URL_REDIRECT_PRODUCTION = "https://mehfi.us";
         globalThis.auth.URL_REDIRECT_DEV = "http://localhost:3001";
-
+        globalThis.auth.SSO_PROVIDERS = ["google"];
         (async function () {
 
             const headers = new Headers();

@@ -18,23 +18,21 @@ body>content>item>menu>button {
     padding: 8px 16px;
     border-radius: 5px;
     cursor: pointer;
-    color: #fff;
-    background-color: #534d46;
+    color: #999;
+    background-color: #00000020;
     float: right;
     margin-left: 10px;
     border: 0;
     letter-spacing: 0.5px;
-    box-shadow: 0px 0px 2px 0px #000;
+    font-size: 120%;    
 
 }
 
 body>content>item>container {
     background-color: var(--input-background-container);
-    border-radius: 5px;
-    color: #fff;
+    color: var(--container-color-label);
     float: left;
     width: 100%;
-    box-shadow: 0px 0px 2px 0px #000;
 }
 
 body>content>item>container>id {
@@ -68,18 +66,20 @@ body>content>item>container>tipo_label {
 body>content>item>container>label {
 
     float: left;
-    font-size: 10pt;
-
+    font-size: 120%;
+    letter-spacing: 1px;
     padding: 20px;
+    color: var(--container-color-label)
 
 }
 
 body>content>item>container>created_at {
 
     float: right;
-    font-size: 10pt;
+    font-size: 120%;
     text-align: right;
     padding: 20px;
+    margin: 0;
 
 }
 
@@ -117,7 +117,7 @@ body>content>item>container>shared {
 body>content>item>container>description {
 
     float: left;
-    width: calc(100% - 80px);
+    width: calc(100% - 40px);
     line-height: 1.5;
     padding: 20px;
     font-size: 10pt;
@@ -125,7 +125,7 @@ body>content>item>container>description {
     overflow-wrap: break-word;
     font-family: consolas;
     background-color: #00000020;
-    margin: 20px
+    margin: 0;
 
 }
 
