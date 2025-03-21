@@ -20,11 +20,6 @@
         textnode: 'Logout',
         onclick: authSignAuth
     });
-    let e_button_videocall = jte({
-        tag: 'button',
-        textnode: 'Videocall',
-        onclick: () => speedj('js/videocall/index.js')
-    });
 
     let e_button_novo = jte({
         tag: 'button',
@@ -37,7 +32,7 @@
     });
 
     // Adicionando os botões dentro do elemento buttons
-    e_buttons.append(e_button_videocall, e_button_novo, e_logout_button);
+    e_buttons.append(e_button_novo, e_logout_button);
     e_header.append(e_buttons); // Adicionando o elemento buttons ao header
 
     if(!document.querySelector('header')){

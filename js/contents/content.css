@@ -13,18 +13,21 @@ body>content>item>menu {
 
 }
 
-body>content>item>menu>button {
-
+/* button{
     padding: 8px 16px;
     border-radius: 5px;
     cursor: pointer;
-    color: #999;
+    color: var(--container-color-label);
     background-color: #00000020;
-    float: right;
-    margin-left: 10px;
     border: 0;
     letter-spacing: 0.5px;
-    font-size: 120%;    
+    font-size: 120%;   
+}
+ */
+body>content>item>menu>button {
+
+    float: right;
+    margin-left: 10px;
 
 }
 
@@ -124,7 +127,7 @@ body>content>item>container>description {
     white-space: pre-wrap;
     overflow-wrap: break-word;
     font-family: consolas;
-    background-color: #00000020;
+    background-color: var(--description-color);
     margin: 0;
 
 }
@@ -181,7 +184,7 @@ body>content>item>container>description:has(email) {
 }
 
 
-body>content>item>container>description>button {
+/* body>content>item>container>description>button {
 
     padding: 8px 16px;
     cursor: pointer;
@@ -193,7 +196,7 @@ body>content>item>container>description>button {
     width: 100%;
 
 }
-
+ */
 body>content>item>container>id {
 
     display: none;
