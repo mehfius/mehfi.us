@@ -9,13 +9,14 @@
     const existing_category = e_header.querySelector('category');
     
     if (!existing_buttons || !existing_category) {
-       
-        const [category_section, buttons_section] = await Promise.all([
+        const [category_section, buttons_section, profile_section] = await Promise.all([
             build_category_section(),
-            build_buttons_section()
+            build_buttons_section(),
+            build_profile_section()
         ]);
         
         if (!existing_category) e_header.append(category_section);
+        if (!e_header.querySelector('profile')) e_header.append(profile_section);
         if (!existing_buttons) e_header.append(buttons_section);
     }
   
@@ -99,7 +100,15 @@
             }
         });
 
-        e_buttons.append(e_button_novo, e_logout_button);
+        e_buttons.append(e_logout_button, e_button_novo);
         return e_buttons;
+    }
+
+    function build_profile_section() {
+        const e_profile = jte({
+            tag: 'profile',
+            style: `background-image: url('${globalThis.auth.PROFILE_IMAGE_URL}')`
+        });
+        return e_profile;
     }
 })();

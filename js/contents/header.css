@@ -30,3 +30,13 @@ body > header > category > button[selected="1"]{
 body > header > category {
     float: left;
 }
+
+profile {
+    width: 40px;
+    height: 40px;
+    border-radius: 5px;
+    background-size: cover;
+    background-position: center;
+    margin-left: 10px;
+    float: right;
+}
