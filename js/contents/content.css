@@ -83,7 +83,7 @@ body>content>item>container>created_at {
     text-align: right;
     padding: 20px;
     margin: 0;
-
+    font-style: italic;
 }
 
 body>content>item>container>icon {
@@ -123,12 +123,12 @@ body>content>item>container>description {
     width: calc(100% - 40px);
     line-height: 1.5;
     padding: 20px;
-    font-size: 10pt;
     white-space: pre-wrap;
     overflow-wrap: break-word;
-    font-family: consolas;
+    font-family: monospace;
     background-color: var(--description-color);
     margin: 0;
+    font-size:120%;
 
 }
 

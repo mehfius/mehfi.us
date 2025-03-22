@@ -61,7 +61,18 @@
                         'Authorization': `Bearer ${globalThis.auth.ACCESS_TOKEN}`
                     },
                     body: JSON.stringify({ ...data })
+                }).then(response => {
+                    if (response.status === 401) {
+                        navdialog.show_dialog(navdialog.create_dialog_alert('Erro de autenticação', 'Sua sessão expirou. Por favor, faça login novamente.'));
+                        return null;
+                    }
+                    return response;
+                }).catch(() => {
+                    navdialog.show_dialog(navdialog.create_dialog_alert('Erro de conexão', 'Não foi possível salvar os dados'));
+                    return null;
                 });
+
+                if (!response) return;
 
                 if (response.status === 204 || response.status === 201) {
                     navdialog.close_dialog(document.querySelector('dialog')); 
@@ -94,7 +105,18 @@
                         'Apikey': globalThis.auth.SUPABASE_KEY,
                         'Authorization': `Bearer ${globalThis.auth.ACCESS_TOKEN}`
                     }
+                }).then(response => {
+                    if (response.status === 401) {
+                        navdialog.show_dialog(navdialog.create_dialog_alert('Erro de autenticação', 'Sua sessão expirou. Por favor, faça login novamente.'));
+                        return null;
+                    }
+                    return response;
+                }).catch(() => {
+                    navdialog.show_dialog(navdialog.create_dialog_alert('Erro de conexão', 'Não foi possível deletar o registro'));
+                    return null;
                 });
+
+                if (!response) return;
 
                 if (response.status === 204) {
                     navdialog.close_dialog(document.querySelector('dialog'));

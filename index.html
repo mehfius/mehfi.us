@@ -81,6 +81,7 @@
 
             supauth(async function (session_data) {  
                 globalThis.auth.ACCESS_TOKEN = session_data.access_token;
+                console.log(session_data.profile_image_url)
                 await speedj('js/contents/content.js');
             });
 
@@ -88,6 +89,8 @@
 
 
     </script>
+    <header></header>
+    <content></content>
 </body>
 
 </html>

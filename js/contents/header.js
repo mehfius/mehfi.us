@@ -1,73 +1,58 @@
 (async function () {
     await speedj('/js/contents/header.css');
     sessionStorage.removeItem('contents_form');
-
-    let e_header = jte({
-        tag: 'header'
-    });
-
-    var json = {};
-    json.name = 'content';
-    json.tipo = JSON.parse(sessionStorage.getItem('category'));
     sessionStorage.removeItem('contents_id');
-    e_header.append(await category());
+    
+    const e_header = document.querySelector('body > header');    
 
-    const e_buttons = jte({ tag: 'buttons' }); // Criação do elemento buttons
-
-    const e_logout_button = jte({
-        tag: 'button',
-        id: 'logout_button',
-        textnode: 'Logout',
-        onclick: authSignAuth
-    });
-
-    let e_button_novo = jte({
-        tag: 'button',
-        textnode: 'Novo',
-        onclick: async () => {
-            sessionStorage.removeItem('contents_id'); // Ensure it's a new record
-            sessionStorage.removeItem('contents_form'); // Clear any existing form data
-            await speedj('js/form/form.js');
-        }
-    });
-
-    // Adicionando os botões dentro do elemento buttons
-    e_buttons.append(e_button_novo, e_logout_button);
-    e_header.append(e_buttons); // Adicionando o elemento buttons ao header
-
-    if(!document.querySelector('header')){
-        document.body.append(e_header);
+    const existing_buttons = e_header.querySelector('buttons');
+    const existing_category = e_header.querySelector('category');
+    
+    if (!existing_buttons || !existing_category) {
+       
+        const [category_section, buttons_section] = await Promise.all([
+            build_category_section(),
+            build_buttons_section()
+        ]);
+        
+        if (!existing_category) e_header.append(category_section);
+        if (!existing_buttons) e_header.append(buttons_section);
     }
-    async function category() {
+  
+    async function build_category_section() {
         const e_element = jte({ tag: 'category' });
 
-        // Wait for categories to be loaded
         if (!globalThis.category) {
-            await new Promise(resolve => {
-                window.addEventListener('categories_loaded', () => {
-                    resolve();
-                });
+            await fetch(`${globalThis.auth.SUPABASE_URL}/rest/v1/category?order=created_at.desc`, {
+                method: "GET",
+                headers: {
+                    "Apikey": globalThis.auth.SUPABASE_KEY,
+                    "Content-Type": "application/json"
+                }
+            }).then(response => {
+                if (response.status === 401) {
+                    navdialog.show_dialog(navdialog.create_dialog_alert('Erro de autenticação', 'Sua sessão expirou. Por favor, faça login novamente.'));
+                    return null;
+                }
+                return response.json();
+            }).then(categories => {
+                if (categories) {
+                    globalThis.category = categories;
+                    window.dispatchEvent(new Event('categories_loaded'));
+                }
+            }).catch(error => {
+                console.error('Error:', error);
             });
         }
 
-        let categories = globalThis.category || [];
-        let current_category = JSON.parse(sessionStorage.getItem('category'));
+        const categories = globalThis.category || [];
+        const current_category = JSON.parse(sessionStorage.getItem('category'));
 
-        for (const category_item of categories) {
+        categories.forEach(category_item => {
             const e_button = jte({
                 tag: 'button',
                 textnode: category_item.label,
-                onclick: async () => {                   
-                    if (JSON.parse(sessionStorage.getItem('category')) == category_item.id) {
-                        sessionStorage.removeItem('category');
-                        e_button.removeAttribute('selected');              
-                    } else {
-                        document.querySelectorAll('body > header > category > button').forEach(button => button.removeAttribute('selected'));
-                        e_button.setAttribute('selected', '1');
-                        sessionStorage.setItem('category', category_item.id);
-                    }
-                    await speedj('js/contents/content.js');
-                }
+                onclick: async () => handle_category_click(category_item, e_button)
             });
 
             if (current_category == category_item.id) {
@@ -75,9 +60,46 @@
             }
 
             e_element.append(e_button);
-        }
+        });
 
         return e_element;
     }
 
+    async function handle_category_click(category_item, button) {
+        if (JSON.parse(sessionStorage.getItem('category')) == category_item.id) {
+            sessionStorage.removeItem('category');
+            button.removeAttribute('selected');
+        } else {
+            document.querySelectorAll('body > header > category > button')
+                .forEach(btn => btn.removeAttribute('selected'));
+            button.setAttribute('selected', '1');
+            sessionStorage.setItem('category', category_item.id);
+        }
+        await speedj('js/contents/content.js');
+    }
+
+    function build_buttons_section() {
+        const e_buttons = jte({ tag: 'buttons' });
+
+        const e_logout_button = jte({
+            tag: 'button',
+            id: 'logout_button',
+            textnode: 'Logout',
+            onclick: authSignAuth
+        });
+
+        const e_button_novo = jte({
+            tag: 'button',
+            textnode: 'Novo',
+            id: 'new_button',
+            onclick: async () => {
+                sessionStorage.removeItem('contents_id');
+                sessionStorage.removeItem('contents_form');
+                await speedj('js/form/form.js');
+            }
+        });
+
+        e_buttons.append(e_button_novo, e_logout_button);
+        return e_buttons;
+    }
 })();

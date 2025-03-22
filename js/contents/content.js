@@ -8,10 +8,6 @@ async function init() {
 
     if (e_content) {
         e_content.innerHTML = '';
-    } else {
-        e_content = jte({
-            tag: 'content'
-        });
     }
 
     var json = {};
@@ -38,8 +34,18 @@ async function init() {
         method: "GET",
         headers: myHeaders,
         redirect: "follow"
-    }).then(response => response.json())
-      .catch(error => console.error(error));
+    }).then(response => {
+        if (response.status === 401) {
+            navdialog.show_dialog(navdialog.create_dialog_alert('Erro de autenticação', 'Sua sessão expirou. Por favor, faça login novamente.'));
+            return null;
+        }
+        return response.json();
+    }).catch(error => {
+        console.error(error);
+        return null;
+    });
+
+    if (!data) return;
 
     e_content.innerHTML = '';
 

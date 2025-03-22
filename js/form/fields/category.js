@@ -28,6 +28,28 @@
 
  /*    e_div.append(e_label); */
 
+    if (!globalThis.category) {
+        await fetch(`${globalThis.auth.SUPABASE_URL}/rest/v1/category?order=created_at.desc`, {
+            method: "GET",
+            headers: {
+                "Apikey": globalThis.auth.SUPABASE_KEY,
+                "Content-Type": "application/json"
+            }
+        }).then(response => {
+            if (response.status === 401) {
+                navdialog.show_dialog(navdialog.create_dialog_alert('Erro de autenticação', 'Sua sessão expirou. Por favor, faça login novamente.'));
+                return null;
+            }
+            return response.json();
+        }).then(categories => {
+            if (categories) {
+                globalThis.category = categories;
+            }
+        }).catch(error => {
+            console.error('Error:', error);
+        });
+    }
+
     contents_category.forEach(category => {
         let e_button = jte({
             tag: 'button',

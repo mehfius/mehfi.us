@@ -20,13 +20,24 @@
                 'Apikey': globalThis.auth.SUPABASE_KEY,
                 'Authorization': `Bearer ${globalThis.auth.ACCESS_TOKEN}`
             },
+        }).then(response => {
+            if (response.status === 401) {
+                navdialog.show_dialog(navdialog.create_dialog_alert('Erro de autenticação', 'Sua sessão expirou. Por favor, faça login novamente.'));
+                return null;
+            }
+            return response;
+        }).catch(() => {
+            navdialog.show_dialog(navdialog.create_dialog_alert('Erro de conexão', 'Não foi possível conectar ao servidor'));
+            return null;
         });
+
+        if (!rawResponse) return;
 
         if (rawResponse.status !== 200) {
             const errorMessage = await rawResponse.text();
             alert(`Erro: Não foi possível obter a resposta do servidor. Mensagem: ${errorMessage}`);
             document.body.removeAttribute("loading");
-            return; // Stop execution if there is an error getting data
+            return; 
         } else {
             sessionStorage.contents_form = JSON.stringify((await rawResponse.json())[0]);
         }
@@ -89,7 +100,18 @@
                         'Authorization': `Bearer ${globalThis.auth.ACCESS_TOKEN}`
                     },
                     body: JSON.stringify({ ...data })
+                }).then(response => {
+                    if (response.status === 401) {
+                        navdialog.show_dialog(navdialog.create_dialog_alert('Erro de autenticação', 'Sua sessão expirou. Por favor, faça login novamente.'));
+                        return null;
+                    }
+                    return response;
+                }).catch(() => {
+                    navdialog.show_dialog(navdialog.create_dialog_alert('Erro de conexão', 'Não foi possível salvar os dados'));
+                    return null;
                 });
+
+                if (!response) return;
 
                 if (response.status === 204 || response.status === 201) {
                     navdialog.close_dialog(dialog);
@@ -117,7 +139,18 @@
                         'Apikey': globalThis.auth.SUPABASE_KEY,
                         'Authorization': `Bearer ${globalThis.auth.ACCESS_TOKEN}`
                     }
+                }).then(response => {
+                    if (response.status === 401) {
+                        navdialog.show_dialog(navdialog.create_dialog_alert('Erro de autenticação', 'Sua sessão expirou. Por favor, faça login novamente.'));
+                        return null;
+                    }
+                    return response;
+                }).catch(() => {
+                    navdialog.show_dialog(navdialog.create_dialog_alert('Erro de conexão', 'Não foi possível deletar o registro'));
+                    return null;
                 });
+
+                if (!response) return;
 
                 if (response.status === 204) {
                     navdialog.close_dialog(dialog);
