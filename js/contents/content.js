@@ -3,6 +3,7 @@ async function init() {
 
     await speedj('js/contents/header.js');
     await speedj('js/contents/content.css');
+    await speedj('js/contents/aside/aside.css');
 
     let e_content = document.querySelector('body > content');
 
@@ -47,9 +48,47 @@ async function init() {
 
     if (!data) return;
 
+    // Create aside element
+    let e_aside = document.querySelector('body > aside');
+    if (!e_aside) {
+        e_aside = jte({ tag: 'aside' });
+        document.body.insertBefore(e_aside, e_content);
+    }
+    e_aside.innerHTML = '';
+
     e_content.innerHTML = '';
 
     for (const dataItem of data) {
+        // Create aside button for each item
+        const e_button = jte({
+            tag: 'button',
+            textnode: dataItem.label || 'Sem título',
+            'data-id': dataItem['id'],
+            onclick: () => {
+                // Remove selected from all buttons
+                document.querySelectorAll('body > aside > button').forEach(btn => {
+                    btn.removeAttribute('selected');
+                });
+                
+                // Set selected on the clicked button
+                e_button.setAttribute('selected', '1');
+                
+                const item_id = dataItem['id'];
+                const target_item = document.querySelector(`item[id="${item_id}"]`);
+                if (target_item) {
+                    const label_element = target_item.querySelector('label');
+                    if (label_element) {
+                        label_element.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                }
+            }
+        });
+
+        e_aside.append(e_button);
+
         const e_item = jte({ tag: 'item', id: dataItem['id'] });
         const e_container = jte({ tag: 'container' });
 
@@ -187,6 +226,43 @@ async function init() {
         e_item.append(e_container, e_files, e_menu);
         e_content.append(e_item);
     }
+
+    // Define handleScroll function before using it
+    const handleScroll = () => {
+        const items = document.querySelectorAll('body > content > item');
+        
+        if (items.length === 0) return;
+
+        let selected_item = null;
+        
+        items.forEach(item => {
+            const rect = item.getBoundingClientRect();
+            if (rect.top <= 120 && rect.bottom >= 120) {
+                selected_item = item;
+            }
+        });
+
+        // Update aside button selection
+        const buttons = document.querySelectorAll('body > aside > button');
+        buttons.forEach(button => {
+            button.removeAttribute('selected');
+        });
+
+        if (selected_item) {
+            const selected_button = document.querySelector(`body > aside > button[data-id="${selected_item.id}"]`);
+            if (selected_button) {
+                selected_button.setAttribute('selected', '1');
+            }
+        }
+    };
+
+    // Add scroll event listener to window
+    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('wheel', handleScroll);
+
+    // Manually trigger the scroll handler once
+    handleScroll();
+
     document.body.append(e_content);
     /* await speedj('js/contents/files.js'); */
 }

@@ -148,14 +148,21 @@ body>content>item>container>description:has(email) {
 
 }
 
-@media (max-width: 1400px) {
+@media (min-width: 1100px) {
+    body>content{
+        width: calc(100% - 200px);
+        display: block;
+    }
+    body>aside{
+        display: block;
+    }    
     body>content>item>container>description:has(button) {
         grid-template-columns: repeat(5, 1fr);
-        /* Change to 2 columns for smaller widths */
     }
 }
 
 @media (max-width: 1100px) {
+
     body>content>item>container>description:has(button) {
         grid-template-columns: repeat(4, 1fr);
         /* Change to 2 columns for smaller widths */
