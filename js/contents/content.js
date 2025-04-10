@@ -4,7 +4,8 @@ async function init() {
     await speedj('js/contents/header.js');
     await speedj('js/contents/content.css');
     await speedj('js/contents/aside/aside.css');
-
+    await speedj('js/contents/tools/tools.css');
+    await speedj('js/contents/tools/tools.js');
     let e_content = document.querySelector('body > content');
 
     if (e_content) {
@@ -264,7 +265,6 @@ async function init() {
     handleScroll();
 
     document.body.append(e_content);
-    /* await speedj('js/contents/files.js'); */
 }
 
 init();

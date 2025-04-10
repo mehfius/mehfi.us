@@ -1,3 +1,9 @@
+body>content {
+    width: calc(100% - 280px);
+    display: block;
+    margin-left: 80px;
+}
+
 body>content>item {
     float: left;
     width: 100%;
@@ -5,30 +11,15 @@ body>content>item {
 }
 
 body>content>item>menu {
-
     float: left;
     width: 100%;
     margin: 0;
     padding: 10px 0;
-
 }
 
-/* button{
-    padding: 8px 16px;
-    border-radius: 5px;
-    cursor: pointer;
-    color: var(--container-color-label);
-    background-color: #00000020;
-    border: 0;
-    letter-spacing: 0.5px;
-    font-size: 120%;   
-}
- */
 body>content>item>menu>button {
-
     float: right;
     margin-left: 10px;
-
 }
 
 body>content>item>container {
@@ -38,46 +29,35 @@ body>content>item>container {
     width: 100%;
 }
 
-body>content>item>container>id {
-
-    float: left;
-    width: 100%;
-
-}
-
+body>content>item>container>id,
 body>content>item>container>users {
-
     float: left;
     width: 100%;
-
+    display: none;
 }
 
-body>content>item>container>tipo {
-
+body>content>item>container>tipo,
+body>content>item>container>a,
+body>content>item>container>d,
+body>content>item>container>shared {
     display: none;
-
 }
 
 body>content>item>container>tipo_label {
-
     float: left;
     font-size: 10pt;
     padding: 20px;
-
 }
 
 body>content>item>container>label {
-
     float: left;
     font-size: 120%;
     letter-spacing: 1px;
     padding: 20px;
-    color: var(--container-color-label)
-
+    color: var(--container-color-label);
 }
 
 body>content>item>container>created_at {
-
     float: right;
     font-size: 120%;
     text-align: right;
@@ -87,38 +67,15 @@ body>content>item>container>created_at {
 }
 
 body>content>item>container>icon {
-
     float: left;
     padding: 20px 0 20px 20px;
-
-}
-
-body>content>item>container>a {
-
-    display: none;
-
 }
 
 body>content>item>files>item>audio {
-
     zoom: 0.5;
-
-}
-
-body>content>item>container>d {
-
-    display: none;
-
-}
-
-body>content>item>container>shared {
-
-    display: none;
-
 }
 
 body>content>item>container>description {
-
     float: left;
     width: calc(100% - 40px);
     line-height: 1.5;
@@ -128,90 +85,50 @@ body>content>item>container>description {
     font-family: monospace;
     background-color: var(--description-color);
     margin: 0;
-    font-size:120%;
-
+    font-size: 120%;
 }
 
 body>content>item>container>description:has(button) {
-
     display: grid;
-    grid-template-columns: repeat(6, 1fr);
     gap: 10px;
-
+    grid-template-columns: repeat(6, 1fr);
 }
 
 body>content>item>container>description:has(email) {
-
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
     gap: 10px;
-
+    grid-template-columns: repeat(5, 1fr);
 }
 
 @media (min-width: 1100px) {
-    body>content{
-        width: calc(100% - 200px);
+    body>aside {
         display: block;
     }
-    body>aside{
-        display: block;
-    }    
     body>content>item>container>description:has(button) {
         grid-template-columns: repeat(5, 1fr);
     }
 }
 
 @media (max-width: 1100px) {
-
     body>content>item>container>description:has(button) {
         grid-template-columns: repeat(4, 1fr);
-        /* Change to 2 columns for smaller widths */
     }
 }
 
 @media (max-width: 900px) {
     body>content>item>container>description:has(button) {
         grid-template-columns: repeat(3, 1fr);
-        /* Change to 2 columns for smaller widths */
     }
 }
 
 @media (max-width: 700px) {
     body>content>item>container>description:has(button) {
         grid-template-columns: repeat(2, 1fr);
-        /* Change to 2 columns for smaller widths */
     }
 }
 
 @media (max-width: 500px) {
     body>content>item>container>description:has(button) {
         grid-template-columns: repeat(1, 1fr);
-        /* Change to 2 columns for smaller widths */
     }
-}
-
-
-/* body>content>item>container>description>button {
-
-    padding: 8px 16px;
-    cursor: pointer;
-    color: #fff;
-    background-color: #4c4740;
-    border: 0;
-    letter-spacing: 0.5px;
-    box-shadow: 0px 0px 1px 0px #000;
-    width: 100%;
-
-}
- */
-body>content>item>container>id {
-
-    display: none;
-
-}
-
-body>content>item>container>users {
-
-    display: none;
-
 }
