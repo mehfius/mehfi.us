@@ -1,14 +1,23 @@
 #!/bin/bash
 
-# Cria uma nova sessão tmux chamada "mysession" com o primeiro comando
-tmux new-session -d -s mysession 'http-server /home/mehfius/pessoal/supacall_dialog/ -p 3002'
+SESSION_NAME="mysession"
 
-# Cria um novo painel horizontal com o segundo comando
-tmux split-window -h -t mysession 'http-server /home/mehfius/pessoal/ -p 3006'
+# Verifica se a sessão já existe
+tmux has-session -t "$SESSION_NAME" 2>/dev/null
 
-# Se o script estiver rodando num terminal interativo, anexa à sessão
-if [ -t 1 ]; then
-  tmux attach-session -t mysession
+if [ $? != 0 ]; then
+  # Cria nova sessão em background com o primeiro comando
+  tmux new-session -d -s "$SESSION_NAME" 'http-server /home/mehfius/pessoal/supacall_dialog/ -p 3002'
+  
+  # Cria o segundo painel
+  tmux split-window -h -t "$SESSION_NAME" 'http-server /home/mehfius/pessoal/ -p 3006'
 else
-  echo "Sessão 'mysession' criada. Use 'tmux attach -t mysession' para entrar."
+  echo "Sessão '$SESSION_NAME' já existe."
+fi
+
+# Se terminal interativo, anexa
+if [ -t 1 ]; then
+  tmux attach-session -t "$SESSION_NAME"
+else
+  echo "Sessão '$SESSION_NAME' pronta. Use: tmux attach -t $SESSION_NAME"
 fi
